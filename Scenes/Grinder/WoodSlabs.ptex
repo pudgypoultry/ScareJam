@@ -1,0 +1,380 @@
+{
+	"connections": [
+		{
+			"from": "normal_map2",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 4
+		},
+		{
+			"from": "invert",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 6
+		},
+		{
+			"from": "fbm2",
+			"from_port": 0,
+			"to": "bricks",
+			"to_port": 1
+		},
+		{
+			"from": "bricks",
+			"from_port": 0,
+			"to": "tonality",
+			"to_port": 0
+		},
+		{
+			"from": "gradient",
+			"from_port": 0,
+			"to": "custom_uv",
+			"to_port": 0
+		},
+		{
+			"from": "bricks",
+			"from_port": 0,
+			"to": "custom_uv",
+			"to_port": 1
+		},
+		{
+			"from": "custom_uv",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 1
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "normal_map2",
+			"to_port": 0
+		},
+		{
+			"from": "fbm2_2",
+			"from_port": 0,
+			"to": "tones_step",
+			"to_port": 0
+		},
+		{
+			"from": "tonality",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 0
+		},
+		{
+			"from": "tones_step",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_2",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 0
+		},
+		{
+			"from": "bricks",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "tonality",
+			"from_port": 0,
+			"to": "invert",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "322",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Godot/Godot 4 ORM",
+			"export_paths": {
+				"Godot/Godot 4 ORM": "C:/Users/Andre/Documents/Godot4Projects/Gaslight/Scenes/Grinder/WoodenWall"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 1103,
+				"y": 37
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao": 1,
+				"depth_scale": 0.22,
+				"emission_energy": 1,
+				"flags_transparent": true,
+				"metallic": 0,
+				"normal": 3.39,
+				"roughness": 1,
+				"size": 11,
+				"sss": 1
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "bricks",
+			"node_position": {
+				"x": 154.633774,
+				"y": 128.030426
+			},
+			"parameters": {
+				"bevel": 0.38,
+				"columns": 1,
+				"corner": 0.5,
+				"mortar": 0,
+				"pattern": 0,
+				"repeat": 1,
+				"round": 0,
+				"row_offset": 0.5,
+				"rows": 10
+			},
+			"seed_int": 0,
+			"type": "bricks3"
+		},
+		{
+			"name": "normal_map2",
+			"node_position": {
+				"x": 738.689331,
+				"y": 138.11377
+			},
+			"parameters": {
+				"buffer": 1,
+				"param2": 0,
+				"size": 10,
+				"strength": 1
+			},
+			"seed_int": 0,
+			"type": "normal_map2"
+		},
+		{
+			"name": "invert",
+			"node_position": {
+				"x": 615.689331,
+				"y": 189.11377
+			},
+			"parameters": {
+
+			},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "fbm2",
+			"node_position": {
+				"x": -121.310669,
+				"y": 240.11377
+			},
+			"parameters": {
+				"folds": 0,
+				"iterations": 8,
+				"noise": 1,
+				"offset": 0,
+				"persistence": 0.74,
+				"scale_x": 4,
+				"scale_y": 15
+			},
+			"seed_int": 0,
+			"type": "fbm2"
+		},
+		{
+			"name": "tonality",
+			"node_position": {
+				"x": 454.689331,
+				"y": 136.11377
+			},
+			"parameters": {
+				"curve": {
+					"points": [
+						{
+							"ls": 0,
+							"rs": 4,
+							"x": 0,
+							"y": 0
+						},
+						{
+							"ls": 1,
+							"rs": 1,
+							"x": 0.292893,
+							"y": 0.707107
+						},
+						{
+							"ls": 0,
+							"rs": 0,
+							"x": 1,
+							"y": 1
+						}
+					],
+					"type": "Curve"
+				}
+			},
+			"seed_int": 0,
+			"type": "tonality"
+		},
+		{
+			"name": "custom_uv",
+			"node_position": {
+				"x": 474.999878,
+				"y": 436.11377
+			},
+			"parameters": {
+				"inputs": 0,
+				"rotate": 180,
+				"scale": 0,
+				"sx": 1.8,
+				"sy": 1.74,
+				"variations": false
+			},
+			"seed_int": 0,
+			"type": "custom_uv"
+		},
+		{
+			"name": "gradient",
+			"node_position": {
+				"x": 203.999878,
+				"y": 424.11377
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 0,
+							"g": 0,
+							"pos": 0,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 1,
+							"g": 1,
+							"pos": 1,
+							"r": 1
+						}
+					],
+					"type": "Gradient"
+				},
+				"repeat": 2,
+				"rotate": 0.9
+			},
+			"seed_int": 0,
+			"type": "gradient"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2",
+			"node_position": {
+				"x": 795.999878,
+				"y": 355.11377
+			},
+			"parameters": {
+				"amount1": 0.64,
+				"blend_type1": 2
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "fbm2_2",
+			"node_position": {
+				"x": -67.000122,
+				"y": -205.88623
+			},
+			"parameters": {
+				"folds": 0,
+				"iterations": 5,
+				"noise": 1,
+				"offset": 0,
+				"persistence": 0.5,
+				"scale_x": 1,
+				"scale_y": 20
+			},
+			"seed_int": 0,
+			"type": "fbm2"
+		},
+		{
+			"name": "tones_step",
+			"node_position": {
+				"x": 223.999878,
+				"y": -204.88623
+			},
+			"parameters": {
+				"invert": false,
+				"value": 0.27,
+				"width": 0.6
+			},
+			"seed_int": 0,
+			"type": "tones_step"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_2",
+			"node_position": {
+				"x": 694.499878,
+				"y": -231.88623
+			},
+			"parameters": {
+				"amount1": 0.83,
+				"blend_type1": 2
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": 455.999878,
+				"y": -45.88623
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 0,
+							"g": 0,
+							"pos": 0,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 0,
+							"g": 0.265869,
+							"pos": 1,
+							"r": 0.34375
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

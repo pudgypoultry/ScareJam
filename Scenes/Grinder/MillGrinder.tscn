@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dn4gowlsth0xx"]
+
+[ext_resource type="PackedScene" uid="uid://b6u8glqmr8vyv" path="res://Scenes/Grinder/mill_wooden_part.tscn" id="1_m7qss"]
+[ext_resource type="PackedScene" uid="uid://cc06vtv7fakxf" path="res://Scenes/Grinder/mill_stone.tscn" id="2_rn65w"]
+[ext_resource type="Script" path="res://Scripts/Gears.gd" id="3_v4buw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ap2rm"]
+size = Vector3(1.24017, 1.32294, 1)
+
+[node name="TheGrindstone" type="Node3D"]
+
+[node name="MillWoodenPart" parent="." instance=ExtResource("1_m7qss")]
+
+[node name="MillStone" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(0.90903, 0, 0.2432, 0, 1, 0, -0.2432, 0, 0.90903, 0, -0.193238, 0)
+script = ExtResource("3_v4buw")
+rotationAmount = 1.0
+
+[node name="MillStone2" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(4.37114e-08, 8.68188e-16, 1, -8.74228e-08, -0.264365, 0, 1, -2.31115e-08, -4.37114e-08, 0, -1.26052, 0)
+
+[node name="PutWoodHere" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.79936, 0.600853, 0, -0.600853, 0.79936, 0, -0.218406, -4.07955)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PutWoodHere"]
+shape = SubResource("BoxShape3D_ap2rm")

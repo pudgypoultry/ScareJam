@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsa0s2qawqe3y"]
+
+[ext_resource type="PackedScene" uid="uid://6oo1dk2qqeoc" path="res://Scenes/Lantern2/LanternGlass.glb" id="1_u5vlm"]
+[ext_resource type="Material" path="res://Scenes/Grinder/LanternGlass.tres" id="2_4agwa"]
+
+[node name="LanternGlass" instance=ExtResource("1_u5vlm")]
+
+[node name="Cylinder" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_4agwa")

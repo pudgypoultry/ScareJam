@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6u8glqmr8vyv"]
+
+[ext_resource type="PackedScene" uid="uid://cwoj7omtvxiws" path="res://Scenes/Grinder/MillWoodenPart.glb" id="1_coc83"]
+[ext_resource type="Material" uid="uid://mpxrro32e8bs" path="res://Scenes/Grinder/WoodenWall2.tres" id="2_1fd6v"]
+
+[node name="MillWoodenPart" instance=ExtResource("1_coc83")]
+
+[node name="WoodenBowl" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_1fd6v")

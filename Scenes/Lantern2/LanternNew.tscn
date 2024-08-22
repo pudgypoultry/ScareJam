@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3qlchy16gvqb"]
+
+[ext_resource type="PackedScene" uid="uid://bi11eb5dt650u" path="res://Scenes/Lantern2/Lantern.glb" id="1_b84kf"]
+[ext_resource type="Material" uid="uid://ofthue8t588" path="res://Scenes/Grinder/Rust2.tres" id="2_h6v14"]
+[ext_resource type="Script" path="res://Scripts/LanternHandler.gd" id="2_lxvi5"]
+[ext_resource type="Material" path="res://Scenes/Grinder/Rust.tres" id="3_pe457"]
+[ext_resource type="Material" uid="uid://bd3l3g1rlh4cr" path="res://Scenes/Grinder/Rust3.tres" id="4_arhvc"]
+[ext_resource type="Material" uid="uid://v3vq2mno6lgp" path="res://Scenes/Grinder/Rust4.tres" id="5_id6dq"]
+[ext_resource type="PackedScene" uid="uid://bsa0s2qawqe3y" path="res://Scenes/Lantern2/lantern_glass.tscn" id="6_heuw7"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_twyyr"]
+height = 11.4151
+radius = 4.94746
+
+[node name="Lantern" node_paths=PackedStringArray("lanternLight", "lanternPickup", "holdingRay", "collisionArea") instance=ExtResource("1_b84kf")]
+script = ExtResource("2_lxvi5")
+lanternLight = [NodePath("OmniLight3D")]
+lanternPickup = NodePath("PickupHandler")
+holdingRay = NodePath("RayCast3D")
+collisionArea = NodePath("PickupHandler")
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_h6v14")
+
+[node name="Plane_001" parent="." index="1"]
+surface_material_override/0 = ExtResource("2_h6v14")
+
+[node name="Plane_002" parent="." index="2"]
+surface_material_override/0 = ExtResource("2_h6v14")
+
+[node name="Plane_003" parent="." index="3"]
+surface_material_override/0 = ExtResource("2_h6v14")
+
+[node name="Cone" parent="." index="4"]
+material_override = ExtResource("3_pe457")
+
+[node name="Circle" parent="." index="7"]
+surface_material_override/0 = ExtResource("4_arhvc")
+
+[node name="Circle_001" parent="." index="8"]
+surface_material_override/0 = ExtResource("4_arhvc")
+
+[node name="Circle_002" parent="." index="9"]
+surface_material_override/0 = ExtResource("4_arhvc")
+
+[node name="Cylinder_002" parent="." index="10"]
+material_override = ExtResource("5_id6dq")
+
+[node name="LanternGlass" parent="." index="11" instance=ExtResource("6_heuw7")]
+
+[node name="Cylinder" parent="LanternGlass" index="0"]
+layers = 2
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86473, 0)
+light_color = Color(1, 0.992157, 0.843137, 1)
+light_energy = 4.13
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.279997, 0)
+target_position = Vector3(0, -10, 0)
+
+[node name="PickupHandler" type="Area3D" parent="." index="14"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupHandler" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.60813, 0)
+shape = SubResource("CylinderShape3D_twyyr")
+
+[editable path="LanternGlass"]

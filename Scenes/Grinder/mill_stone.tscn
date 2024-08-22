@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc06vtv7fakxf"]
+
+[ext_resource type="PackedScene" uid="uid://ckwt5ococjlba" path="res://Scenes/Grinder/MillStone.glb" id="1_e3425"]
+[ext_resource type="Material" uid="uid://bqmeg3t6d3xum" path="res://Scenes/Grinder/Marble.tres" id="2_7bual"]
+
+[node name="MillStone" instance=ExtResource("1_e3425")]
+
+[node name="TopMill" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_7bual")

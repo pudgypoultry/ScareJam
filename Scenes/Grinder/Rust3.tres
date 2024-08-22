@@ -1,0 +1,11 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://bd3l3g1rlh4cr"]
+
+[ext_resource type="Texture2D" uid="uid://dberrv6230pmu" path="res://Scenes/Grinder/Rust_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bropd8xn1elms" path="res://Scenes/Grinder/Rust_normal.png" id="3"]
+
+[resource]
+albedo_color = Color(0.69396, 0.873011, 0.669754, 1)
+albedo_texture = ExtResource("1")
+normal_enabled = true
+normal_texture = ExtResource("3")
+uv1_scale = Vector3(1, 0.18, 1)

@@ -1,0 +1,12 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://b26kx7ootgqqv"]
+
+[ext_resource type="Texture2D" uid="uid://dtjm6fwb2sipj" path="res://Scenes/Grinder/Wood_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://c2t22cylkwxe8" path="res://Scenes/Grinder/Wood_normal.png" id="3"]
+
+[resource]
+cull_mode = 2
+albedo_texture = ExtResource("1")
+normal_enabled = true
+normal_scale = -6.21
+normal_texture = ExtResource("3")
+uv1_scale = Vector3(5.115, 0.215, 1)

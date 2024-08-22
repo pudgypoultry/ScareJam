@@ -1,0 +1,304 @@
+{
+	"connections": [
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "blend_11",
+			"from_port": 0,
+			"to": "blend_8",
+			"to_port": 1
+		},
+		{
+			"from": "fbm2_3",
+			"from_port": 0,
+			"to": "blend_11",
+			"to_port": 0
+		},
+		{
+			"from": "blend_8",
+			"from_port": 0,
+			"to": "bevel",
+			"to_port": 0
+		},
+		{
+			"from": "clouds_noise",
+			"from_port": 0,
+			"to": "invert_2",
+			"to_port": 0
+		},
+		{
+			"from": "invert_2",
+			"from_port": 0,
+			"to": "blend_11",
+			"to_port": 1
+		},
+		{
+			"from": "clouds_noise",
+			"from_port": 0,
+			"to": "blend_8",
+			"to_port": 0
+		},
+		{
+			"from": "invert_3",
+			"from_port": 0,
+			"to": "normal_map2",
+			"to_port": 0
+		},
+		{
+			"from": "blend_8",
+			"from_port": 0,
+			"to": "invert_3",
+			"to_port": 0
+		},
+		{
+			"from": "normal_map2",
+			"from_port": 0,
+			"to": "edge_detect_1",
+			"to_port": 0
+		},
+		{
+			"from": "edge_detect_1",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 4
+		},
+		{
+			"from": "blend_8",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "322",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"export_paths": {
+
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 875,
+				"y": 254
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao": 1,
+				"depth_scale": 0.84,
+				"emission_energy": 1,
+				"flags_transparent": true,
+				"metallic": 0,
+				"normal": 0.81,
+				"roughness": 1,
+				"size": 11,
+				"sss": 0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": 435,
+				"y": 140
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 0,
+							"g": 0,
+							"pos": 0,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 0.677811,
+							"g": 0.778447,
+							"pos": 0.308237,
+							"r": 0.785156
+						},
+						{
+							"a": 1,
+							"b": 1,
+							"g": 1,
+							"pos": 0.344601,
+							"r": 1
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "bevel",
+			"node_position": {
+				"x": 149,
+				"y": 378
+			},
+			"parameters": {
+				"bevel": {
+					"points": [
+						{
+							"ls": 0,
+							"rs": 4,
+							"x": 0,
+							"y": 0
+						},
+						{
+							"ls": 1,
+							"rs": 1,
+							"x": 0.292893,
+							"y": 0.707107
+						},
+						{
+							"ls": 0,
+							"rs": 0,
+							"x": 1,
+							"y": 1
+						}
+					],
+					"type": "Curve"
+				},
+				"distance": 1,
+				"size": 10
+			},
+			"seed_int": 0,
+			"type": "bevel"
+		},
+		{
+			"name": "clouds_noise",
+			"node_position": {
+				"x": -93,
+				"y": 770
+			},
+			"parameters": {
+				"n_scale": 1,
+				"param0": 10,
+				"param1": 0
+			},
+			"seed_int": 0,
+			"type": "clouds_noise"
+		},
+		{
+			"name": "fbm2_3",
+			"node_position": {
+				"x": -65.209953,
+				"y": 927.412354
+			},
+			"parameters": {
+				"folds": 0,
+				"iterations": 6,
+				"noise": 9,
+				"offset": 0,
+				"persistence": 0.55,
+				"scale_x": 32,
+				"scale_y": 32
+			},
+			"seed_int": 1104296064,
+			"type": "fbm2"
+		},
+		{
+			"name": "blend_11",
+			"node_position": {
+				"x": 340.706757,
+				"y": 925.106812
+			},
+			"parameters": {
+				"amount": 0.37,
+				"blend_type": 2
+			},
+			"seed_int": 0,
+			"type": "blend"
+		},
+		{
+			"name": "blend_8",
+			"node_position": {
+				"x": 602.706726,
+				"y": 925.106812
+			},
+			"parameters": {
+				"amount": 0.3,
+				"blend_type": 1
+			},
+			"seed_int": 0,
+			"type": "blend"
+		},
+		{
+			"name": "invert_2",
+			"node_position": {
+				"x": 357.195923,
+				"y": 782.602905
+			},
+			"parameters": {
+
+			},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "normal_map2",
+			"node_position": {
+				"x": 506.695923,
+				"y": 376.602905
+			},
+			"parameters": {
+				"buffer": 1,
+				"param2": 0,
+				"size": 10,
+				"strength": 0.45
+			},
+			"seed_int": 0,
+			"type": "normal_map2"
+		},
+		{
+			"name": "invert_3",
+			"node_position": {
+				"x": 352.288391,
+				"y": 386.981323
+			},
+			"parameters": {
+
+			},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "edge_detect_1",
+			"node_position": {
+				"x": 671.906128,
+				"y": 542.16571
+			},
+			"parameters": {
+				"size": 10
+			},
+			"seed_int": 0,
+			"type": "edge_detect_1"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}
