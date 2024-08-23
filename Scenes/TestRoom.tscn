@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://chuuphnsyp1ya"]
+
+[ext_resource type="PackedScene" uid="uid://dbcdka2dj638u" path="res://platform.tscn" id="1_mj6wr"]
+[ext_resource type="PackedScene" uid="uid://bu67pvycyns0n" path="res://Scenes/Player/PlayerCharacter.tscn" id="2_lj2bt"]
+[ext_resource type="Material" path="res://Scenes/Wall/WoodWall.tres" id="3_o6got"]
+[ext_resource type="Script" path="res://Scenes/OilHandler.gd" id="4_p2qs8"]
+
+[sub_resource type="Environment" id="Environment_nkkkh"]
+background_mode = 1
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vqgcn"]
+size = Vector3(2, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcs7m"]
+size = Vector3(2, 0.1, 4)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5u3bp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3vtyn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8rdur"]
+albedo_color = Color(0.98182, 0, 1, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Floor" parent="." instance=ExtResource("1_mj6wr")]
+
+[node name="Player" parent="." instance=ExtResource("2_lj2bt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23619, 1.17139, 0.641241)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nkkkh")
+
+[node name="WallSegment" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.21796, -7.60318)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment"]
+shape = SubResource("BoxShape3D_vqgcn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSegment"]
+mesh = SubResource("BoxMesh_mcs7m")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="OilCollection" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98755, 1.65986, -5.90773)
+script = ExtResource("4_p2qs8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OilCollection"]
+shape = SubResource("SphereShape3D_5u3bp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OilCollection"]
+mesh = SubResource("SphereMesh_3vtyn")
+surface_material_override/0 = SubResource("StandardMaterial3D_8rdur")

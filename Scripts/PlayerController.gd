@@ -50,7 +50,7 @@ var cameraX : float = 0.0
 var cameraY : float = 0.0
 
 var moveDirection : Vector3 = Vector3.ZERO
-var holdingItem = true
+var holdingLantern = true
 var debugCounter = 0
 
 
@@ -118,16 +118,19 @@ func Rotation(event):
 func Collectin():
 	# print_debug(collectingRay.is_colliding(), collectingRay.get_collider())
 	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding():
-		if collectingRay.get_collider() == lanternObject.collisionArea && !holdingItem:
+		if collectingRay.get_collider() == lanternObject.collisionArea && !holdingLantern:
 			lanternObject.pickupAndDrop(holdingPosition)
-			holdingItem = true
+			holdingLantern = true
 		
-		elif collectingRay.get_collider().is_in_group("Collectable") && !holdingItem:
+		elif collectingRay.get_collider().is_in_group("Collectable") && !holdingLantern:
 			collectingRay.get_collider().CollectMe(self)
 	
-	if Input.is_action_just_pressed("Drop") && holdingItem:
+	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding() && holdingLantern:
+		pass
+	
+	if Input.is_action_just_pressed("Drop") && holdingLantern:
 		lanternObject.pickupAndDrop(holdingPosition)
-		holdingItem = false
+		holdingLantern = false
 
 
 func CheckLight():

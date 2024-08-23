@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ScareJamAug"
-run/main_scene="res://Node3D_Example.tscn"
+run/main_scene="res://Scenes/TestRoom.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
