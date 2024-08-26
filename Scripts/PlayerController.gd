@@ -19,7 +19,24 @@ var isNearLight : bool:
 		isNearLight = value
 	get:
 		return isNearLight
-		
+
+@export_group("Resource Management")
+@export var grindableCount : int:
+	set(value):
+		grindableCount = value
+	get:
+		return grindableCount
+@export var currentOilReward : float:
+	set(value):
+		currentOilReward = value
+	get:
+		return currentOilReward
+@export var currentOilFillTime : float:
+	set(value):
+		currentOilReward = value
+	get:
+		return currentOilReward
+
 @export_group("Horizontal Movement")
 @export var playerSpeed : float = 10
 
@@ -29,18 +46,13 @@ var isNearLight : bool:
 @export var verticalCameraClamp : float = 40
 
 @export_group("Plugging In Objects")
-@export var collectingRay : RayCast3D
 @export var lanternLight : OmniLight3D
 @export var lanternObject : LanternHandler
 @export var holdingPosition : Node3D
-
-'''
-@export var currentGun : Node3D
-@export var doubleJumpRay : RayCast3D
-@export var gunPosition : Node3D
-'''
+@export var grindableHoldingPosition : Node3D
 
 @export_group("Collision Management")
+@export var collectingRay : RayCast3D
 
 @export_group("NodePaths")
 @export var camPath : NodePath
@@ -51,6 +63,7 @@ var cameraY : float = 0.0
 
 var moveDirection : Vector3 = Vector3.ZERO
 var holdingLantern = true
+var holdingGrindable = false
 var debugCounter = 0
 
 
@@ -58,6 +71,8 @@ var debugCounter = 0
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	currentHP = baseHP
+	currentOilReward = 5
+	currentOilFillTime = 1
 	verticalCameraClamp = deg_to_rad(verticalCameraClamp)
 
 
@@ -72,6 +87,8 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_ESCAPE):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
 
@@ -117,20 +134,55 @@ func Rotation(event):
 
 func Collectin():
 	# print_debug(collectingRay.is_colliding(), collectingRay.get_collider())
-	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding():
-		if collectingRay.get_collider() == lanternObject.collisionArea && !holdingLantern:
-			lanternObject.pickupAndDrop(holdingPosition)
+	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding() && !holdingLantern:
+		var currentCollision = collectingRay.get_collider()
+		if currentCollision == lanternObject.collisionArea:
+			lanternObject.PickupAndDrop(holdingPosition)
 			holdingLantern = true
+			print("I'm LIKE HERE THO")
 		
-		elif collectingRay.get_collider().is_in_group("Collectable") && !holdingLantern:
+		if collectingRay.get_collider().is_in_group("Collectable"):
 			collectingRay.get_collider().CollectMe(self)
+			print("CURRENTLY HERE")
+		
+		if currentCollision.is_in_group("Breakable"):
+			print("Player Position: ", position)
+			currentCollision.BreakMe()
 	
-	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding() && holdingLantern:
-		pass
+	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding():
+		var currentCollision = collectingRay.get_collider()
+		if holdingLantern && currentCollision.is_in_group("LanternFuel"):
+				currentCollision.CollectMe(lanternObject)
+				return
+		if grindableCount > 0:
+			if currentCollision.is_in_group("MillGrinder"):
+				if !currentCollision.currentlySpawned:
+					# Grind it up baybeeeeee
+					grindableCount -= 1
+					currentCollision.TakeInMaterial(currentOilReward, currentOilFillTime)
+					print("Grindables: ", grindableCount)
+					return
+		if currentCollision.is_in_group("Grindable"):
+			# Pick up the item that can be ground up
+			currentCollision.CollectMe(self)
+			print_debug("Collected a grindable: ", grindableCount)
+			return
+
 	
-	if Input.is_action_just_pressed("Drop") && holdingLantern:
-		lanternObject.pickupAndDrop(holdingPosition)
+	# BE AWARE OF IF ELIF HERE, IT SHOULD EVENTUALLY BE ELIF
+	if Input.is_action_just_pressed("Drop"):
+		print(collectingRay.is_colliding(), holdingLantern)
+		if collectingRay.is_colliding():
+			print(collectingRay.get_collider())
+	if Input.is_action_just_pressed("Drop") && !collectingRay.is_colliding() && holdingLantern:
+		lanternObject.PickupAndDrop(holdingPosition)
 		holdingLantern = false
+		
+		
+	if Input.is_action_just_pressed("Drop") && !collectingRay.is_colliding() && holdingGrindable:
+		pass
+		print("You are a dumbo")
+		# Drop fuel
 
 
 func CheckLight():

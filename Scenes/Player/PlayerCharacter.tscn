@@ -432,14 +432,18 @@ radius = 4.94746
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nn60n"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("collectingRay", "lanternLight", "lanternObject", "holdingPosition") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("lanternLight", "lanternObject", "holdingPosition", "grindableHoldingPosition", "collectingRay") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37085, 0)
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_w5vtj")
 playerSpeed = 3.0
-collectingRay = NodePath("Camera3d/RayCast3D")
+verticalCameraClamp = 50.0
 lanternLight = NodePath("ItemHolder/Lantern/OmniLight3D")
 lanternObject = NodePath("ItemHolder/Lantern")
 holdingPosition = NodePath("ItemHolder")
+grindableHoldingPosition = NodePath("GrindableHolder")
+collectingRay = NodePath("Camera3d/CollectionRay")
 camPath = NodePath("Camera3d")
 
 [node name="ItemHolder" type="Node3D" parent="."]
@@ -511,11 +515,13 @@ shape = SubResource("CapsuleShape3D_nn60n")
 [node name="Camera3d" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.359825, 0)
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3d"]
+[node name="CollectionRay" type="RayCast3D" parent="Camera3d"]
 target_position = Vector3(0, 0, -2.5)
 hit_from_inside = true
 collide_with_areas = true
-collide_with_bodies = false
+
+[node name="GrindableHolder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.090458, 0.215923, -2.32127)
 
 [editable path="ItemHolder/Lantern"]
 [editable path="ItemHolder/Lantern/LanternGlass"]

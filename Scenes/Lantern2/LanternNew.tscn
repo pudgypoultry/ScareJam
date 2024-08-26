@@ -12,12 +12,13 @@
 height = 11.4151
 radius = 4.94746
 
-[node name="Lantern" node_paths=PackedStringArray("lanternLight", "lanternPickup", "holdingRay", "collisionArea") instance=ExtResource("1_b84kf")]
+[node name="Lantern" node_paths=PackedStringArray("lanternLight", "lanternPickup", "holdingRay", "collisionArea", "collisionNode") instance=ExtResource("1_b84kf")]
 script = ExtResource("2_lxvi5")
 lanternLight = [NodePath("OmniLight3D")]
 lanternPickup = NodePath("PickupHandler")
-holdingRay = NodePath("RayCast3D")
+holdingRay = NodePath("FloorChecker")
 collisionArea = NodePath("PickupHandler")
+collisionNode = NodePath("PickupHandler/CollisionShape3D")
 
 [node name="Plane" parent="." index="0"]
 surface_material_override/0 = ExtResource("2_h6v14")
@@ -56,14 +57,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86473, 0)
 light_color = Color(1, 0.992157, 0.843137, 1)
 light_energy = 4.13
 
-[node name="RayCast3D" type="RayCast3D" parent="." index="13"]
+[node name="FloorChecker" type="RayCast3D" parent="." index="13"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.279997, 0)
 target_position = Vector3(0, -10, 0)
+collision_mask = 4
 
 [node name="PickupHandler" type="Area3D" parent="." index="14"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickupHandler" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.60813, 0)
 shape = SubResource("CylinderShape3D_twyyr")
+disabled = true
 
 [editable path="LanternGlass"]

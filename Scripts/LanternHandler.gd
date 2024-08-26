@@ -30,7 +30,6 @@ var lightEnergyMax : float:
 @export var lanternPickup : Area3D
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lightEnergyMax = lanternLight[0].omni_range
@@ -49,8 +48,12 @@ func handleLight(delta):
 		for light in lanternLight:
 			light.omni_range -= (lightDropOffRate / 300)
 
+
 func refillLight(amount : float):
 	for light in lanternLight:
 		if light.omni_range < lightEnergyMax:
 			light.omni_range += amount
 			print_debug(light.omni_range)
+
+func handleCollision(mode : bool):
+	lanternPickup.disabled = mode

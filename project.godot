@@ -19,6 +19,15 @@ config/icon="res://icon.svg"
 
 project/assembly_name="ScareJamAug"
 
+[global_group]
+
+LanternFuel="Anything that can fuel the lantern"
+MillGrinder="Anything that can grind things into fuel"
+Grindable="Any object that can be put into the mill to be ground"
+Player=""
+Lantern="The Lantern"
+Breakable="Any item that is breakable"
+
 [input]
 
 Forward={

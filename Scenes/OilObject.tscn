@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://nbgvqs5qk2ul"]
+
+[ext_resource type="Script" path="res://Scripts/OilHandler.gd" id="1_n6135"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5u3bp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3vtyn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8rdur"]
+albedo_color = Color(0.98182, 0, 1, 1)
+
+[node name="OilCollection" type="StaticBody3D" groups=["LanternFuel"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_n6135")
+oilAdditionAmount = 100
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5u3bp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_3vtyn")
+surface_material_override/0 = SubResource("StandardMaterial3D_8rdur")

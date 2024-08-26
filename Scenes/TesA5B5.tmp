@@ -1,0 +1,76 @@
+[gd_scene load_steps=14 format=3 uid="uid://chuuphnsyp1ya"]
+
+[ext_resource type="PackedScene" uid="uid://dbcdka2dj638u" path="res://platform.tscn" id="1_mj6wr"]
+[ext_resource type="PackedScene" uid="uid://bu67pvycyns0n" path="res://Scenes/Player/PlayerCharacter.tscn" id="2_lj2bt"]
+[ext_resource type="Material" path="res://Scenes/Wall/WoodWall.tres" id="3_o6got"]
+[ext_resource type="Script" path="res://Scripts/OilHandler.gd" id="4_p2qs8"]
+[ext_resource type="Script" path="res://Scripts/MillHandler.gd" id="5_we673"]
+
+[sub_resource type="Environment" id="Environment_nkkkh"]
+background_mode = 1
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vqgcn"]
+size = Vector3(2, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcs7m"]
+size = Vector3(2, 0.1, 4)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5u3bp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3vtyn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8rdur"]
+albedo_color = Color(0.98182, 0, 1, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c56yb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_20xgo"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Floor" parent="." instance=ExtResource("1_mj6wr")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="Player" parent="." instance=ExtResource("2_lj2bt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23619, 1.17139, 0.641241)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nkkkh")
+
+[node name="WallSegment" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.21796, -7.60318)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment"]
+shape = SubResource("BoxShape3D_vqgcn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSegment"]
+mesh = SubResource("BoxMesh_mcs7m")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="OilCollection" type="StaticBody3D" parent="." groups=["LanternFuel"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98755, 1.65986, -5.90773)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("4_p2qs8")
+oilAdditionAmount = 100
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OilCollection"]
+shape = SubResource("SphereShape3D_5u3bp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OilCollection"]
+mesh = SubResource("SphereMesh_3vtyn")
+surface_material_override/0 = SubResource("StandardMaterial3D_8rdur")
+
+[node name="FuelProcessor" type="StaticBody3D" parent="." groups=["MillGrinder"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 1.28923, -6.03307)
+script = ExtResource("5_we673")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FuelProcessor"]
+shape = SubResource("CylinderShape3D_c56yb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FuelProcessor"]
+mesh = SubResource("CylinderMesh_20xgo")
