@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://lwxhnqog48ro"]
+
+[ext_resource type="PackedScene" uid="uid://dwnd36v018igd" path="res://Scenes/Axe/AxeModel.glb" id="1_lu3y2"]
+[ext_resource type="Script" path="res://Scripts/AxeHandler.gd" id="1_vprxn"]
+[ext_resource type="PackedScene" uid="uid://bf0111vvaeqox" path="res://Scenes/Axe/AxeHandleModel.glb" id="2_mggtr"]
+[ext_resource type="Material" uid="uid://bt6cols0eor3" path="res://Scenes/Axe/RustedAxe.tres" id="3_3yybl"]
+
+[node name="AxeObject" type="Node3D"]
+script = ExtResource("1_vprxn")
+
+[node name="AxeModel" parent="." instance=ExtResource("1_lu3y2")]
+
+[node name="AxeHandleModel" parent="." instance=ExtResource("2_mggtr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.53001, -0.918365)
+
+[node name="Cube" parent="AxeHandleModel" index="0"]
+surface_material_override/0 = ExtResource("3_3yybl")
+
+[editable path="AxeHandleModel"]

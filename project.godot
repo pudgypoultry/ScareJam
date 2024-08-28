@@ -27,6 +27,7 @@ Grindable="Any object that can be put into the mill to be ground"
 Player=""
 Lantern="The Lantern"
 Breakable="Any item that is breakable"
+Inspectable="Anything that can be picked up and inspected"
 
 [input]
 

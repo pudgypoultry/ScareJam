@@ -3,19 +3,16 @@
 [ext_resource type="Script" path="res://Scripts/GrindableHandler.gd" id="1_scb65"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8cx33"]
-radius = 0.05
+radius = 0.2
 height = 1.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nett1"]
 radius = 0.02
 height = 1.0
 
-[node name="GrindableObject" type="Area3D" node_paths=PackedStringArray("collider", "holdingRay", "collisionArea", "collisionNode") groups=["Grindable"]]
+[node name="GrindableObject" type="Area3D" node_paths=PackedStringArray("collider") groups=["Grindable"]]
 script = ExtResource("1_scb65")
 collider = NodePath("CollisionShape3D")
-holdingRay = NodePath("DropItemCheck")
-collisionArea = NodePath(".")
-collisionNode = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0292373, 0, 0)

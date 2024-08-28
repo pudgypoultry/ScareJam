@@ -10,14 +10,13 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_twyyr"]
 height = 11.4151
-radius = 4.94746
+radius = 2.0
 
-[node name="Lantern" node_paths=PackedStringArray("lanternLight", "lanternPickup", "holdingRay", "collisionArea", "collisionNode") instance=ExtResource("1_b84kf")]
+[node name="Lantern" node_paths=PackedStringArray("lanternLight", "lanternPickup", "holdingRay", "collisionNode") instance=ExtResource("1_b84kf")]
 script = ExtResource("2_lxvi5")
 lanternLight = [NodePath("OmniLight3D")]
 lanternPickup = NodePath("PickupHandler")
 holdingRay = NodePath("FloorChecker")
-collisionArea = NodePath("PickupHandler")
 collisionNode = NodePath("PickupHandler/CollisionShape3D")
 
 [node name="Plane" parent="." index="0"]
@@ -63,12 +62,11 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 4
 
 [node name="PickupHandler" type="Area3D" parent="." index="14"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickupHandler" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.60813, 0)
 shape = SubResource("CylinderShape3D_twyyr")
-disabled = true
 
 [editable path="LanternGlass"]

@@ -50,6 +50,7 @@ var isNearLight : bool:
 @export var lanternObject : LanternHandler
 @export var holdingPosition : Node3D
 @export var grindableHoldingPosition : Node3D
+@export var axeObject : AxeHandler
 
 @export_group("Collision Management")
 @export var collectingRay : RayCast3D
@@ -62,9 +63,11 @@ var cameraX : float = 0.0
 var cameraY : float = 0.0
 
 var moveDirection : Vector3 = Vector3.ZERO
-var holdingLantern = true
-var holdingGrindable = false
+var holdingLantern = false
 var debugCounter = 0
+var canAct : bool = true
+var inspecting : bool = false
+var currentInspectable : InspectableHandler
 
 
 # Called when the node enters the scene tree for the first time.
@@ -82,6 +85,7 @@ func _physics_process(delta):
 
 	Movin(delta)
 	Collectin()
+	HandleInspectable()
 	move_and_slide()
 	CheckLight()
 	
@@ -108,23 +112,23 @@ func KillMe():
 
 
 func Movin(delta):
-	if Input.is_action_pressed("Forward"):
-		moveDirection += -basis.z
-	if Input.is_action_pressed("Backward"):
-		moveDirection += basis.z
-	if Input.is_action_pressed("StrafeLeft"):
-		moveDirection += -basis.x
-	if Input.is_action_pressed("StrafeRight"):
-		moveDirection += basis.x
+	if canAct:
+		if Input.is_action_pressed("Forward"):
+			moveDirection += -basis.z
+		if Input.is_action_pressed("Backward"):
+			moveDirection += basis.z
+		if Input.is_action_pressed("StrafeLeft"):
+			moveDirection += -basis.x
+		if Input.is_action_pressed("StrafeRight"):
+			moveDirection += basis.x
 	
 	moveDirection = moveDirection.normalized()
 	
 	velocity = moveDirection * playerSpeed + Vector3(0, velocity.y, 0)
 
 
-
 func Rotation(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion && canAct:
 		cameraX -= deg_to_rad(camSpeedX * event.relative.x)
 		cameraY -= deg_to_rad(camSpeedY * event.relative.y)
 		cameraY = clampf(cameraY, -verticalCameraClamp, verticalCameraClamp)
@@ -133,66 +137,86 @@ func Rotation(event):
 
 
 func Collectin():
-	# print_debug(collectingRay.is_colliding(), collectingRay.get_collider())
-	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding() && !holdingLantern:
-		var currentCollision = collectingRay.get_collider()
-		if currentCollision == lanternObject.collisionArea:
-			lanternObject.PickupAndDrop(holdingPosition)
-			holdingLantern = true
-			print("I'm LIKE HERE THO")
-		
-		if collectingRay.get_collider().is_in_group("Collectable"):
-			collectingRay.get_collider().CollectMe(self)
-			print("CURRENTLY HERE")
-		
-		if currentCollision.is_in_group("Breakable"):
-			print("Player Position: ", position)
-			currentCollision.BreakMe()
-	
-	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding():
-		var currentCollision = collectingRay.get_collider()
-		if holdingLantern && currentCollision.is_in_group("LanternFuel"):
-				currentCollision.CollectMe(lanternObject)
+	if canAct:
+		# If I am not holding the lantern and I'm trying to pick up something
+		if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding() && !holdingLantern:
+			var currentCollision = collectingRay.get_collider()
+			print(currentCollision)
+			# If that something is the lantern, pick it up
+			if currentCollision.is_in_group("Lantern"):
+				print("I AM OVER HERE")
+				axeObject.PutAway()
+				HoldPlayerInput(0.7)
+				await get_tree().create_timer(0.7, true).timeout
+				lanternObject.PickupAndDrop(holdingPosition)
+				holdingLantern = true
 				return
-		if grindableCount > 0:
-			if currentCollision.is_in_group("MillGrinder"):
-				if !currentCollision.currentlySpawned:
+			
+			# If that something is a breakable, chop it
+			if currentCollision.is_in_group("Breakable"):
+				axeObject.Chop()
+				HoldPlayerInput(1.4)
+				await get_tree().create_timer(1.3, true).timeout
+				currentCollision.BreakMe()
+				print("Ready to pick up again")
+				return
+		
+		# If I am trying to interact with anything at all
+		if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding():
+			var currentCollision = collectingRay.get_collider()
+			
+			# If that something is fuel for the lantern, fuel the lantern
+			if holdingLantern && currentCollision.is_in_group("LanternFuel"):
+					currentCollision.CollectMe(lanternObject)
+					return
+			
+			# If I have more than 0 grindable objects in my inventory, and if that object is the mill, grind a thing
+			if grindableCount > 0:
+				if currentCollision.is_in_group("MillGrinder"):
+					#if !currentCollision.currentlySpawned:
 					# Grind it up baybeeeeee
 					grindableCount -= 1
 					currentCollision.TakeInMaterial(currentOilReward, currentOilFillTime)
 					print("Grindables: ", grindableCount)
 					return
-		if currentCollision.is_in_group("Grindable"):
-			# Pick up the item that can be ground up
-			currentCollision.CollectMe(self)
-			print_debug("Collected a grindable: ", grindableCount)
-			return
+			
+			# If that object is something that is grindable, pick it up
+			if currentCollision.is_in_group("Grindable"):
+				# Pick up the item that can be ground up
+				currentCollision.CollectMe(self)
+				print_debug("Collected a grindable: ", grindableCount)
+				return
+		
+		if Input.is_action_just_pressed("Drop") && !collectingRay.is_colliding() && holdingLantern:
+			lanternObject.PickupAndDrop(holdingPosition)
+			holdingLantern = false
+			axeObject.Equip()
 
+
+func HandleInspectable():
+	if Input.is_action_just_pressed("PickUp") && collectingRay.is_colliding():
+		var currentCollision = collectingRay.get_collider()
+		if currentCollision.is_in_group("Inspectable") && !inspecting:
+			# Hold action until done
+			canAct = false
+			inspecting = true
+			# Display UI item and blur screen behind UI item
+			currentInspectable = currentCollision
+			currentInspectable.InspectMe()
 	
-	# BE AWARE OF IF ELIF HERE, IT SHOULD EVENTUALLY BE ELIF
-	if Input.is_action_just_pressed("Drop"):
-		print(collectingRay.is_colliding(), holdingLantern)
-		if collectingRay.is_colliding():
-			print(collectingRay.get_collider())
-	if Input.is_action_just_pressed("Drop") && !collectingRay.is_colliding() && holdingLantern:
-		lanternObject.PickupAndDrop(holdingPosition)
-		holdingLantern = false
-		
-		
-	if Input.is_action_just_pressed("Drop") && !collectingRay.is_colliding() && holdingGrindable:
-		pass
-		print("You are a dumbo")
-		# Drop fuel
+	if Input.is_action_just_pressed("Drop") && inspecting:
+		# Put away UI Item and unblur screen behind UI
+		currentInspectable.IgnoreMe()
+		inspecting = false
+		canAct = true
 
 
 func CheckLight():
 	# Check if I'm within the current range of the lantern light.
 	isNearLight = (position.distance_to(lanternLight.position) < lanternLight.omni_range)
-	
-	'''
-	if debugCounter > 10:
-		print_debug("Within Light: ", isNearLight)
-		print_debug("Holding Lantern: ", holdingLantern)
-		debugCounter = 0
-	debugCounter += 1
-	'''
+
+
+func HoldPlayerInput(howLong : float):
+	canAct = false
+	await get_tree().create_timer(howLong, true).timeout
+	canAct = true

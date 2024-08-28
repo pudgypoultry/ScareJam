@@ -1,23 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://chuuphnsyp1ya"]
+[gd_scene load_steps=20 format=3 uid="uid://chuuphnsyp1ya"]
 
 [ext_resource type="PackedScene" uid="uid://dbcdka2dj638u" path="res://platform.tscn" id="1_mj6wr"]
 [ext_resource type="PackedScene" uid="uid://bu67pvycyns0n" path="res://Scenes/Player/PlayerCharacter.tscn" id="2_lj2bt"]
-[ext_resource type="Material" path="res://Scenes/Wall/WoodWall.tres" id="3_o6got"]
+[ext_resource type="Material" uid="uid://f306caak5fp5" path="res://Scenes/Wall/WoodWall.tres" id="3_o6got"]
 [ext_resource type="PackedScene" uid="uid://nbgvqs5qk2ul" path="res://Scenes/OilObject.tscn" id="5_e7yxb"]
 [ext_resource type="Script" path="res://Scripts/MillHandler.gd" id="5_we673"]
 [ext_resource type="PackedScene" uid="uid://1lgndh3n5yvk" path="res://Scenes/GrindableObject.tscn" id="6_ux84r"]
 [ext_resource type="Script" path="res://Scripts/BreakableHandler.gd" id="7_4mut5"]
+[ext_resource type="Material" uid="uid://8av4g2by35ns" path="res://Scenes/StoneWall/RockyWall.tres" id="8_nqqqx"]
+[ext_resource type="PackedScene" uid="uid://c3qlchy16gvqb" path="res://Scenes/Lantern2/LanternNew.tscn" id="9_gcppq"]
 
 [sub_resource type="Environment" id="Environment_nkkkh"]
 background_mode = 1
-background_color = Color(0.453125, 0.453125, 0.453125, 1)
+ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_vqgcn"]
-size = Vector3(2, 0.1, 4)
-
-[sub_resource type="BoxMesh" id="BoxMesh_mcs7m"]
-size = Vector3(2, 0.1, 4)
+ambient_light_energy = 0.05
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c56yb"]
 
@@ -35,36 +32,45 @@ height = 3.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_deinn"]
 albedo_color = Color(0.325142, 1, 0, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_vqgcn"]
+size = Vector3(20, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcs7m"]
+size = Vector3(20, 0.1, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ms3c4"]
+size = Vector3(3, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y8okp"]
+size = Vector3(3, 0.1, 4)
+
 [node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["Inspectable"]]
+environment = SubResource("Environment_nkkkh")
 
 [node name="Floor" parent="." instance=ExtResource("1_mj6wr")]
 collision_layer = 4
 collision_mask = 4
 
-[node name="Player" parent="." groups=["Lantern"] instance=ExtResource("2_lj2bt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23619, 1.51963, 0.641241)
-grindableCount = 1
-currentOilReward = 5.0
+[node name="Player" parent="." node_paths=PackedStringArray("lanternLight", "lanternObject") groups=["Lantern"] instance=ExtResource("2_lj2bt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23619, 2.02754, 0.641241)
+collision_layer = 1
+collision_mask = 1
+grindableCount = 10
+currentOilReward = 25.0
 currentOilFillTime = 1.0
 verticalCameraClamp = 60.0
+lanternLight = NodePath("../Lantern/OmniLight3D")
+lanternObject = NodePath("../Lantern")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_nkkkh")
-
-[node name="WallSegment" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.21796, -7.60318)
-collision_layer = 3
+[node name="CollectionRay" parent="Player/Camera3d" index="0"]
 collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment"]
-shape = SubResource("BoxShape3D_vqgcn")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSegment"]
-mesh = SubResource("BoxMesh_mcs7m")
-surface_material_override/0 = ExtResource("3_o6got")
 
 [node name="FuelProcessor" type="StaticBody3D" parent="." node_paths=PackedStringArray("oilDestination", "collectibleOilObject") groups=["MillGrinder"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 1.28923, -6.03307)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("5_we673")
 oilDestination = NodePath("OilLocation")
 collectibleOilObject = NodePath("../OilCollection")
@@ -80,6 +86,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01518, 0.354367, 0.119519)
 
 [node name="GrindableObject2" parent="." instance=ExtResource("6_ux84r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.10125, 0.361626, -5.76133)
+collision_layer = 3
+collision_mask = 3
+oilAmount = 20
 
 [node name="GrindableObject3" parent="." instance=ExtResource("6_ux84r")]
 transform = Transform3D(0.383103, 0, -0.923706, -0.115563, 0.992143, -0.0479293, 0.916448, 0.125108, 0.380093, -3.10125, 0.361626, -5.40763)
@@ -87,25 +96,19 @@ transform = Transform3D(0.383103, 0, -0.923706, -0.115563, 0.992143, -0.0479293,
 [node name="GrindableObject4" parent="." instance=ExtResource("6_ux84r")]
 transform = Transform3D(0.954849, 0, 0.297092, 0, 1, 0, -0.297092, 0, 0.954849, -3.06899, 0.361626, -5.54052)
 
-[node name="OilCollection" parent="." groups=["Breakable"] instance=ExtResource("5_e7yxb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.311, 0)
-
-[node name="GrindableObject5" parent="." instance=ExtResource("6_ux84r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.10125, 0.361626, -5.76133)
-
-[node name="BreakableObject" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionToInstantiate0", "positionToInstantiate1", "positionToInstantiate2") groups=["Breakable"]]
+[node name="BreakableObject" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.56, 1.37366, -5.20795)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableObjectSpawnGuy")
-grindablesProvided = 3
-positionToInstantiate0 = NodePath("Pos0")
-positionToInstantiate1 = NodePath("Pos1")
-positionToInstantiate2 = NodePath("Pos2")
+grindableToProvide = NodePath("../GrindableToCopy")
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1"), NodePath("Pos2")]
+fullHealthMesh = NodePath("FullHealth")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BreakableObject"]
 shape = SubResource("CylinderShape3D_c20fj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BreakableObject"]
+[node name="FullHealth" type="MeshInstance3D" parent="BreakableObject"]
 mesh = SubResource("CylinderMesh_pugxc")
 surface_material_override/0 = SubResource("StandardMaterial3D_deinn")
 
@@ -118,7 +121,173 @@ transform = Transform3D(0.930379, 0, 0.366599, 0, 1, 0, -0.366599, 0, 0.930379, 
 [node name="Pos2" type="Marker3D" parent="BreakableObject"]
 transform = Transform3D(-0.955849, 0, 0.293857, 0, 1, 0, -0.293857, 0, -0.955849, 0.536479, -1.07092, -0.395175)
 
-[node name="GrindableObjectSpawnGuy" parent="." instance=ExtResource("6_ux84r")]
+[node name="RockyWall" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.3686, 2.21796, -7.7202)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RockyWall"]
+shape = SubResource("BoxShape3D_vqgcn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RockyWall"]
+mesh = SubResource("BoxMesh_mcs7m")
+surface_material_override/0 = ExtResource("8_nqqqx")
+
+[node name="WallSegment" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.21796, 0.77396)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WallSegment"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WallSegment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WallSegment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment2" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.21796, -2.21687)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment2"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WallSegment2"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WallSegment2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WallSegment2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment3" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -5.208)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment3"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WallSegment3"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WallSegment3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WallSegment3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment4" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -8.199)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment4"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WallSegment4"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WallSegment4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WallSegment4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment5" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -11.19)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment5"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WallSegment5"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WallSegment5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WallSegment5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment6" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -14.181)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment6"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WallSegment6"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WallSegment6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WallSegment6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="OilCollection" parent="." groups=["Breakable"] instance=ExtResource("5_e7yxb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.311, 0)
+
+[node name="GrindableToCopy" parent="." instance=ExtResource("6_ux84r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.7917, 1.41052)
-rotationOffset = Vector3(0, 0, 0)
-scaleOffset = Vector3(1, 1, 1)
+
+[node name="Lantern" parent="." groups=["Lantern"] instance=ExtResource("9_gcppq")]
+transform = Transform3D(0.241662, 0, 0, 0, 0.241663, 0, 0, 0, 0.241662, -0.245933, 0.25, -2.70219)
+holding = false
+
+[node name="FloorChecker" parent="Lantern" index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08194, -0.279997, 0)
+
+[node name="PickupHandler" parent="Lantern" index="14" groups=["Lantern"]]
+
+[node name="CollisionShape3D" parent="Lantern/PickupHandler" index="0" groups=["Lantern"]]
+
+[editable path="Player"]
+[editable path="Lantern"]
+[editable path="Lantern/LanternGlass"]

@@ -2,22 +2,25 @@ extends StaticBody3D
 
 class_name BreakableHandler
 
+@export_category("Interaction Rules")
 @export var grindableToProvide : Area3D
 @export var itemStrength = 3
-@export var grindablesProvided : int = 1
-@export var positionToInstantiate0 : Node3D = null
-@export var positionToInstantiate1 : Node3D = null
-@export var positionToInstantiate2 : Node3D = null
-var positionsToInstantiate : Array[Node3D]
+@export var positionsToInstantiate : Array[Node3D]= []
+
+@export_category("Player Feedback")
+@export var soundEffect : Array[AudioEffect] = []
+@export var fullHealthMesh : MeshInstance3D
+@export var damagedMesh : MeshInstance3D
+@export var destroyedMesh : MeshInstance3D
+
 var sceneRoot : Node3D
 var grindableTestScene = preload("res://Scenes/GrindableObject.tscn")
+var grindablesProvided : int = 1
+
 
 func _ready():
-	print("Before: ", positionsToInstantiate)
-	positionsToInstantiate.append(positionToInstantiate0)
-	positionsToInstantiate.append(positionToInstantiate1)
-	positionsToInstantiate.append(positionToInstantiate2)
-	print("After: ", positionsToInstantiate)
+	grindablesProvided = len(positionsToInstantiate)
+
 
 func BreakMe():
 	if itemStrength > 0:

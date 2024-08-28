@@ -1,4 +1,4 @@
-extends Interactable
+extends Area3D
 
 class_name GrindableHandler
 # pickupAndDrop
