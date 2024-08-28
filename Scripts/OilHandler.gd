@@ -2,6 +2,10 @@ extends StaticBody3D
 
 class_name OilHandler
 
+@export_category("Tooltip")
+@export var tooltipText : String = "(E) to fuel the lantern"
+
+@export_category("Resource Control")
 @export var oilAdditionAmount : float = 10
 @export var oilFillTime : float = 10
 var whoCreatedMe : MillHandler

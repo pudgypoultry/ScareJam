@@ -13,7 +13,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_w5vtj")
 playerSpeed = 3.0
-verticalCameraClamp = 50.0
+verticalCameraClamp = 70.0
 holdingPosition = NodePath("ItemHolder")
 grindableHoldingPosition = NodePath("GrindableHolder")
 axeObject = NodePath("ItemHolder/AxeObject")
@@ -36,8 +36,8 @@ shape = SubResource("CapsuleShape3D_nn60n")
 [node name="Camera3d" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.359825, 0)
 
-[node name="CollectionRay" type="RayCast3D" parent="Camera3d"]
-target_position = Vector3(0, 0, -2.5)
+[node name="CollectionRay" type="RayCast3D" parent="Camera3d" groups=["Player"]]
+target_position = Vector3(0, 0, -2.75)
 collision_mask = 2
 collide_with_areas = true
 

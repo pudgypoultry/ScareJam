@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name PlayerController
+
 @export_group("Health Management")
 @export var baseHP : float = 10:
 	set (value):
@@ -51,6 +53,7 @@ var isNearLight : bool:
 @export var holdingPosition : Node3D
 @export var grindableHoldingPosition : Node3D
 @export var axeObject : AxeHandler
+@export var playerUI : UIHandler
 
 @export_group("Collision Management")
 @export var collectingRay : RayCast3D
@@ -82,8 +85,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	moveDirection = Vector3.ZERO
-
 	Movin(delta)
+	ManageTooltip()
 	Collectin()
 	HandleInspectable()
 	move_and_slide()
@@ -123,7 +126,6 @@ func Movin(delta):
 			moveDirection += basis.x
 	
 	moveDirection = moveDirection.normalized()
-	
 	velocity = moveDirection * playerSpeed + Vector3(0, velocity.y, 0)
 
 
@@ -134,6 +136,33 @@ func Rotation(event):
 		cameraY = clampf(cameraY, -verticalCameraClamp, verticalCameraClamp)
 		cam.set_rotation(Vector3(cameraY, cam.rotation.y, cam.rotation.z))
 		set_rotation(Vector3(rotation.x, cameraX, rotation.z))
+
+
+func ManageTooltip():
+	if collectingRay.is_colliding():
+		var currentCollision = collectingRay.get_collider()
+		await get_tree().create_timer(0.1, true).timeout
+		if currentCollision != null:
+			if currentCollision.is_in_group("Grindable"):
+				playerUI.SetTooltip(currentCollision.tooltipText)
+			elif currentCollision.is_in_group("MillGrinder") && grindableCount > 0:
+				playerUI.SetTooltip(currentCollision.tooltipText)
+			elif currentCollision.is_in_group("MillGrinder"):
+				playerUI.SetTooltip("You need something to grind into oil...")
+			elif currentCollision.is_in_group("Lantern"):
+				playerUI.SetTooltip(currentCollision.get_parent().tooltipText)
+			elif currentCollision.is_in_group("Breakable") && !holdingLantern:
+				playerUI.SetTooltip(currentCollision.tooltipText)
+			elif currentCollision.is_in_group("Inspectable"):
+				playerUI.SetTooltip(currentCollision.tooltipText)
+			elif currentCollision.is_in_group("LanternFuel") && holdingLantern:
+				playerUI.SetTooltip(currentCollision.tooltipText)
+			elif currentCollision.is_in_group("LanternFuel"):
+				playerUI.SetTooltip("Bring the lantern to the oil...")
+			else:
+				playerUI.SetTooltip("")
+	else:
+		playerUI.SetTooltip("")
 
 
 func Collectin():
@@ -190,6 +219,7 @@ func Collectin():
 		if Input.is_action_just_pressed("Drop") && !collectingRay.is_colliding() && holdingLantern:
 			lanternObject.PickupAndDrop(holdingPosition)
 			holdingLantern = false
+			HoldPlayerInput(0.7)
 			axeObject.Equip()
 
 
@@ -202,13 +232,15 @@ func HandleInspectable():
 			inspecting = true
 			# Display UI item and blur screen behind UI item
 			currentInspectable = currentCollision
-			currentInspectable.InspectMe()
+			currentInspectable.InspectMe(self)
+			lanternObject.PauseLight()
 	
 	if Input.is_action_just_pressed("Drop") && inspecting:
 		# Put away UI Item and unblur screen behind UI
-		currentInspectable.IgnoreMe()
+		currentInspectable.IgnoreMe(self)
 		inspecting = false
 		canAct = true
+		lanternObject.ResumeLight()
 
 
 func CheckLight():

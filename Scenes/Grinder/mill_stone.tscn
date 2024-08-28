@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc06vtv7fakxf"]
+[gd_scene load_steps=3 format=3 uid="uid://o50jyo5e1d60"]
 
 [ext_resource type="PackedScene" uid="uid://ckwt5ococjlba" path="res://Scenes/Grinder/MillStone.glb" id="1_e3425"]
-[ext_resource type="Material" uid="uid://bqmeg3t6d3xum" path="res://Scenes/Grinder/Marble.tres" id="2_7bual"]
+[ext_resource type="Material" uid="uid://cixlwj5nq30bm" path="res://Scenes/Grinder/MarbleFromPoops.tres" id="2_bj8w2"]
 
 [node name="MillStone" instance=ExtResource("1_e3425")]
 
 [node name="TopMill" parent="." index="0"]
-surface_material_override/0 = ExtResource("2_7bual")
+surface_material_override/0 = ExtResource("2_bj8w2")

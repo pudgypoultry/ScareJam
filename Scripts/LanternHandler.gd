@@ -2,6 +2,9 @@ extends Node3D
 
 class_name LanternHandler
 
+@export_category("Tooltip")
+@export var tooltipText : String = "(E) to pick up the Gaslit Lantern\n(F) to drop it back on the ground"
+
 @export_category("Positioning")
 @export var placementOffset : float = 0.0
 @export var rotationOffset : Vector3 = Vector3(0, -163.4, 0)
@@ -37,6 +40,7 @@ var lightEnergyMax : float:
 @export var holdingRay : RayCast3D
 @export var collisionNode : CollisionShape3D
 
+var previousRate : float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -71,7 +75,7 @@ func handleCollision(mode : bool):
 func PickupAndDrop(handPosition : Node3D):
 	if holding:
 		reparent(holdingRay.get_collider())
-		position = holdingRay.get_collision_point() + Vector3(0, placementOffset, 0)
+		global_position = holdingRay.get_collision_point() + Vector3(0, placementOffset, 0)
 		holding = false
 		collisionNode.set_disabled(false)
 		print_debug(self.name, " should be enabled now")
@@ -84,3 +88,10 @@ func PickupAndDrop(handPosition : Node3D):
 		holding = true
 		collisionNode.set_disabled(true)
 		print_debug(self.name, " should be disabled now")
+
+func PauseLight():
+	previousRate = lightDropOffRate
+	lightDropOffRate = 0
+
+func ResumeLight():
+	lightDropOffRate = previousRate

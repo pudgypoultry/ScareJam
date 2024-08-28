@@ -1,20 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://dn4gowlsth0xx"]
+[gd_scene load_steps=7 format=3 uid="uid://be0huppc2l3kd"]
 
-[ext_resource type="PackedScene" uid="uid://b6u8glqmr8vyv" path="res://Scenes/Grinder/mill_wooden_part.tscn" id="1_m7qss"]
-[ext_resource type="PackedScene" uid="uid://cc06vtv7fakxf" path="res://Scenes/Grinder/mill_stone.tscn" id="2_rn65w"]
+[ext_resource type="PackedScene" uid="uid://bxthdx76oxi7t" path="res://Scenes/Grinder/mill_wooden_part.tscn" id="1_m7qss"]
+[ext_resource type="PackedScene" uid="uid://o50jyo5e1d60" path="res://Scenes/Grinder/mill_stone.tscn" id="2_rn65w"]
 [ext_resource type="Script" path="res://Scripts/Gears.gd" id="3_v4buw"]
+[ext_resource type="Material" uid="uid://cixlwj5nq30bm" path="res://Scenes/Grinder/MarbleFromPoops.tres" id="4_43qpa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ap2rm"]
 size = Vector3(1.24017, 1.32294, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_20qio"]
+top_radius = 3.8
+bottom_radius = 3.8
+height = 0.05
 
 [node name="TheGrindstone" type="Node3D"]
 
 [node name="MillWoodenPart" parent="." instance=ExtResource("1_m7qss")]
 
 [node name="MillStone" parent="." instance=ExtResource("2_rn65w")]
-transform = Transform3D(0.90903, 0, 0.2432, 0, 1, 0, -0.2432, 0, 0.90903, 0, -0.193238, 0)
+transform = Transform3D(0.90903, 0, 0.2432, 0, 1, 0, -0.2432, 0, 0.90903, 0, -0.308, 0)
 script = ExtResource("3_v4buw")
-rotationAmount = 1.0
+
+[node name="MillStone3" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(0.908843, 0, -0.243898, 0, 1, 0, 0.243898, 0, 0.908843, 0, -0.307883, 0)
+script = ExtResource("3_v4buw")
+
+[node name="MillStone4" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(0.665132, 0, -0.665643, 0, 1, 0, 0.665643, 0, 0.665132, 0, -0.307883, 0)
+script = ExtResource("3_v4buw")
+
+[node name="MillStone5" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(0.665132, 0, -0.665643, 0, 1, 0, 0.665643, 0, 0.665132, 0, -0.307883, 0)
+script = ExtResource("3_v4buw")
+
+[node name="MillStone6" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(0.2432, 0, -0.90903, 0, 1, 0, 0.90903, 0, 0.2432, 0, -0.307883, 0)
+script = ExtResource("3_v4buw")
+
+[node name="MillStone7" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(-0.243898, 0, -0.908843, 0, 1, 0, 0.908843, 0, -0.243898, 0, -0.307883, 0)
+script = ExtResource("3_v4buw")
+
+[node name="MillStone8" parent="." instance=ExtResource("2_rn65w")]
+transform = Transform3D(-0.665643, 0, -0.665132, 0, 1, 0, 0.665132, 0, -0.665643, 0, -0.307883, 0)
+script = ExtResource("3_v4buw")
 
 [node name="MillStone2" parent="." instance=ExtResource("2_rn65w")]
 transform = Transform3D(4.37114e-08, 8.68188e-16, 1, -8.74228e-08, -0.264365, 0, 1, -2.31115e-08, -4.37114e-08, 0, -1.26052, 0)
@@ -24,3 +53,13 @@ transform = Transform3D(1, 0, 0, 0, 0.79936, 0.600853, 0, -0.600853, 0.79936, 0,
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PutWoodHere"]
 shape = SubResource("BoxShape3D_ap2rm")
+
+[node name="StoneTop" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, -0.270079, 0)
+script = ExtResource("3_v4buw")
+rotationAmount = -1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StoneTop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.136178, 0)
+mesh = SubResource("CylinderMesh_20qio")
+surface_material_override/0 = ExtResource("4_43qpa")

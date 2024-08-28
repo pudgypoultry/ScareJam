@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6u8glqmr8vyv"]
+[gd_scene load_steps=3 format=3 uid="uid://bxthdx76oxi7t"]
 
 [ext_resource type="PackedScene" uid="uid://cwoj7omtvxiws" path="res://Scenes/Grinder/MillWoodenPart.glb" id="1_coc83"]
-[ext_resource type="Material" uid="uid://mpxrro32e8bs" path="res://Scenes/Grinder/WoodenWall2.tres" id="2_1fd6v"]
+[ext_resource type="Material" path="res://Scenes/Grinder/WoodenWall2.tres" id="2_1fd6v"]
 
 [node name="MillWoodenPart" instance=ExtResource("1_coc83")]
 

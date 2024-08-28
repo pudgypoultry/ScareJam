@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/GrindableHandler.gd" id="1_scb65"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8cx33"]
-radius = 0.2
+radius = 0.4
 height = 1.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nett1"]
@@ -12,6 +12,7 @@ height = 1.0
 
 [node name="GrindableObject" type="Area3D" node_paths=PackedStringArray("collider") groups=["Grindable"]]
 script = ExtResource("1_scb65")
+tooltipText = "(E) to pick up"
 collider = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

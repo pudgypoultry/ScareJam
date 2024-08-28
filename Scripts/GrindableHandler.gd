@@ -3,6 +3,8 @@ extends Area3D
 class_name GrindableHandler
 # pickupAndDrop
 
+@export_category("Tooltip")
+@export var tooltipText : String = ""
 @export_category("Oil Production Properties")
 @export var oilAmount = 10
 @export var grindTime = 10

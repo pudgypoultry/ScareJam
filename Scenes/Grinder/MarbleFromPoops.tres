@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cixlwj5nq30bm"]
+
+[ext_resource type="Texture2D" uid="uid://8btsbvjgkrn" path="res://Scenes/Grinder/MarbleFromPoops_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://ca70xrhbnc2v1" path="res://Scenes/Grinder/MarbleFromPoops_orm.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://02ufhtkg44o7" path="res://Scenes/Grinder/MarbleFromPoops_normal.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://c4bb2kwxfxjt4" path="res://Scenes/Grinder/MarbleFromPoops_sss.png" id="6"]
+
+[resource]
+albedo_color = Color(0.545258, 0.545258, 0.545258, 1)
+albedo_texture = ExtResource("1")
+roughness_texture = ExtResource("2")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("3")
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.25
+subsurf_scatter_texture = ExtResource("6")

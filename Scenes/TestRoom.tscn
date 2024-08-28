@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://chuuphnsyp1ya"]
+[gd_scene load_steps=31 format=3 uid="uid://chuuphnsyp1ya"]
 
 [ext_resource type="PackedScene" uid="uid://dbcdka2dj638u" path="res://platform.tscn" id="1_mj6wr"]
 [ext_resource type="PackedScene" uid="uid://bu67pvycyns0n" path="res://Scenes/Player/PlayerCharacter.tscn" id="2_lj2bt"]
@@ -9,16 +9,20 @@
 [ext_resource type="Script" path="res://Scripts/BreakableHandler.gd" id="7_4mut5"]
 [ext_resource type="Material" uid="uid://8av4g2by35ns" path="res://Scenes/StoneWall/RockyWall.tres" id="8_nqqqx"]
 [ext_resource type="PackedScene" uid="uid://c3qlchy16gvqb" path="res://Scenes/Lantern2/LanternNew.tscn" id="9_gcppq"]
+[ext_resource type="PackedScene" uid="uid://ljlsfvw1lf7m" path="res://Scenes/UI/PlayerUI.tscn" id="10_o5wxr"]
+[ext_resource type="Script" path="res://Scripts/InspectableHandler.gd" id="11_2a1tb"]
+[ext_resource type="Texture2D" uid="uid://d3bdlfpcftxm1" path="res://dickbutt.png" id="12_fokyj"]
+[ext_resource type="PackedScene" uid="uid://be0huppc2l3kd" path="res://Scenes/Grinder/MillGrinder.tscn" id="13_cfi6f"]
 
 [sub_resource type="Environment" id="Environment_nkkkh"]
 background_mode = 1
+background_color = Color(0.0507813, 0.0507813, 0.0507813, 1)
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.05
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c56yb"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_20xgo"]
+radius = 0.75
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c20fj"]
 height = 3.0
@@ -32,11 +36,12 @@ height = 3.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_deinn"]
 albedo_color = Color(0.325142, 1, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vqgcn"]
-size = Vector3(20, 0.1, 4)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_porna"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_mcs7m"]
-size = Vector3(20, 0.1, 4)
+[sub_resource type="CylinderMesh" id="CylinderMesh_j4jti"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h1wm7"]
+albedo_color = Color(0, 0.012712, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ms3c4"]
 size = Vector3(3, 0.1, 4)
@@ -44,31 +49,50 @@ size = Vector3(3, 0.1, 4)
 [sub_resource type="BoxMesh" id="BoxMesh_y8okp"]
 size = Vector3(3, 0.1, 4)
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vqgcn"]
+size = Vector3(30, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcs7m"]
+size = Vector3(30, 0.1, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ggnk0"]
+size = Vector3(20, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ej28l"]
+size = Vector3(20, 0.1, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jlpm5"]
+size = Vector3(20, 0.1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uwy5u"]
+size = Vector3(20, 0.1, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7q206"]
+size = Vector3(50.7, 0.676636, 41.145)
+
+[node name="MillScene" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["Inspectable"]]
 environment = SubResource("Environment_nkkkh")
 
-[node name="Floor" parent="." instance=ExtResource("1_mj6wr")]
-collision_layer = 4
-collision_mask = 4
+[node name="PlayerUI" parent="." instance=ExtResource("10_o5wxr")]
 
-[node name="Player" parent="." node_paths=PackedStringArray("lanternLight", "lanternObject") groups=["Lantern"] instance=ExtResource("2_lj2bt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23619, 2.02754, 0.641241)
+[node name="Player" parent="." node_paths=PackedStringArray("lanternLight", "lanternObject", "playerUI") groups=["Lantern"] instance=ExtResource("2_lj2bt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23619, 2.65008, 0.641241)
 collision_layer = 1
 collision_mask = 1
 grindableCount = 10
 currentOilReward = 25.0
 currentOilFillTime = 1.0
-verticalCameraClamp = 60.0
 lanternLight = NodePath("../Lantern/OmniLight3D")
 lanternObject = NodePath("../Lantern")
+playerUI = NodePath("../PlayerUI")
 
 [node name="CollectionRay" parent="Player/Camera3d" index="0"]
 collision_mask = 3
 
 [node name="FuelProcessor" type="StaticBody3D" parent="." node_paths=PackedStringArray("oilDestination", "collectibleOilObject") groups=["MillGrinder"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 1.28923, -6.03307)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55498, 1.28923, -3.45226)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("5_we673")
@@ -76,25 +100,14 @@ oilDestination = NodePath("OilLocation")
 collectibleOilObject = NodePath("../OilCollection")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FuelProcessor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.110753, 0, -0.242219)
 shape = SubResource("CylinderShape3D_c56yb")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FuelProcessor"]
-mesh = SubResource("CylinderMesh_20xgo")
-
 [node name="OilLocation" type="Marker3D" parent="FuelProcessor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01518, 0.354367, 0.119519)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.20758, 0.354367, -1.44289)
 
-[node name="GrindableObject2" parent="." instance=ExtResource("6_ux84r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.10125, 0.361626, -5.76133)
-collision_layer = 3
-collision_mask = 3
-oilAmount = 20
-
-[node name="GrindableObject3" parent="." instance=ExtResource("6_ux84r")]
-transform = Transform3D(0.383103, 0, -0.923706, -0.115563, 0.992143, -0.0479293, 0.916448, 0.125108, 0.380093, -3.10125, 0.361626, -5.40763)
-
-[node name="GrindableObject4" parent="." instance=ExtResource("6_ux84r")]
-transform = Transform3D(0.954849, 0, 0.297092, 0, 1, 0, -0.297092, 0, 0.954849, -3.06899, 0.361626, -5.54052)
+[node name="TheGrindstone" parent="FuelProcessor" instance=ExtResource("13_cfi6f")]
+transform = Transform3D(-0.807022, 0, 0.590521, 0, 1, 0, -0.590521, 0, -0.807022, 2.62092, 0.220586, -3.62765)
 
 [node name="BreakableObject" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.56, 1.37366, -5.20795)
@@ -121,156 +134,6 @@ transform = Transform3D(0.930379, 0, 0.366599, 0, 1, 0, -0.366599, 0, 0.930379, 
 [node name="Pos2" type="Marker3D" parent="BreakableObject"]
 transform = Transform3D(-0.955849, 0, 0.293857, 0, 1, 0, -0.293857, 0, -0.955849, 0.536479, -1.07092, -0.395175)
 
-[node name="RockyWall" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.3686, 2.21796, -7.7202)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RockyWall"]
-shape = SubResource("BoxShape3D_vqgcn")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RockyWall"]
-mesh = SubResource("BoxMesh_mcs7m")
-surface_material_override/0 = ExtResource("8_nqqqx")
-
-[node name="WallSegment" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.21796, 0.77396)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableToCopy")
-itemStrength = 2
-positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
-fullHealthMesh = NodePath("FullHealth")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment"]
-shape = SubResource("BoxShape3D_ms3c4")
-
-[node name="FullHealth" type="MeshInstance3D" parent="WallSegment"]
-mesh = SubResource("BoxMesh_y8okp")
-surface_material_override/0 = ExtResource("3_o6got")
-
-[node name="Pos0" type="Marker3D" parent="WallSegment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
-
-[node name="Pos1" type="Marker3D" parent="WallSegment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
-
-[node name="WallSegment2" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.21796, -2.21687)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableToCopy")
-itemStrength = 2
-positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
-fullHealthMesh = NodePath("FullHealth")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment2"]
-shape = SubResource("BoxShape3D_ms3c4")
-
-[node name="FullHealth" type="MeshInstance3D" parent="WallSegment2"]
-mesh = SubResource("BoxMesh_y8okp")
-surface_material_override/0 = ExtResource("3_o6got")
-
-[node name="Pos0" type="Marker3D" parent="WallSegment2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
-
-[node name="Pos1" type="Marker3D" parent="WallSegment2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
-
-[node name="WallSegment3" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -5.208)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableToCopy")
-itemStrength = 2
-positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
-fullHealthMesh = NodePath("FullHealth")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment3"]
-shape = SubResource("BoxShape3D_ms3c4")
-
-[node name="FullHealth" type="MeshInstance3D" parent="WallSegment3"]
-mesh = SubResource("BoxMesh_y8okp")
-surface_material_override/0 = ExtResource("3_o6got")
-
-[node name="Pos0" type="Marker3D" parent="WallSegment3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
-
-[node name="Pos1" type="Marker3D" parent="WallSegment3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
-
-[node name="WallSegment4" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -8.199)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableToCopy")
-itemStrength = 2
-positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
-fullHealthMesh = NodePath("FullHealth")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment4"]
-shape = SubResource("BoxShape3D_ms3c4")
-
-[node name="FullHealth" type="MeshInstance3D" parent="WallSegment4"]
-mesh = SubResource("BoxMesh_y8okp")
-surface_material_override/0 = ExtResource("3_o6got")
-
-[node name="Pos0" type="Marker3D" parent="WallSegment4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
-
-[node name="Pos1" type="Marker3D" parent="WallSegment4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
-
-[node name="WallSegment5" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -11.19)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableToCopy")
-itemStrength = 2
-positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
-fullHealthMesh = NodePath("FullHealth")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment5"]
-shape = SubResource("BoxShape3D_ms3c4")
-
-[node name="FullHealth" type="MeshInstance3D" parent="WallSegment5"]
-mesh = SubResource("BoxMesh_y8okp")
-surface_material_override/0 = ExtResource("3_o6got")
-
-[node name="Pos0" type="Marker3D" parent="WallSegment5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
-
-[node name="Pos1" type="Marker3D" parent="WallSegment5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
-
-[node name="WallSegment6" type="StaticBody3D" parent="." node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
-transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -12.251, 2.218, -14.181)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_4mut5")
-grindableToProvide = NodePath("../GrindableToCopy")
-itemStrength = 2
-positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
-fullHealthMesh = NodePath("FullHealth")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSegment6"]
-shape = SubResource("BoxShape3D_ms3c4")
-
-[node name="FullHealth" type="MeshInstance3D" parent="WallSegment6"]
-mesh = SubResource("BoxMesh_y8okp")
-surface_material_override/0 = ExtResource("3_o6got")
-
-[node name="Pos0" type="Marker3D" parent="WallSegment6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
-
-[node name="Pos1" type="Marker3D" parent="WallSegment6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
-
 [node name="OilCollection" parent="." groups=["Breakable"] instance=ExtResource("5_e7yxb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.311, 0)
 
@@ -278,15 +141,782 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.311, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.7917, 1.41052)
 
 [node name="Lantern" parent="." groups=["Lantern"] instance=ExtResource("9_gcppq")]
-transform = Transform3D(0.241662, 0, 0, 0, 0.241663, 0, 0, 0, 0.241662, -0.245933, 0.25, -2.70219)
+transform = Transform3D(0.241662, 0, 0, 0, 0.241663, 0, 0, 0, 0.241662, -0.245933, 0.30547, -2.70219)
 holding = false
-
-[node name="FloorChecker" parent="Lantern" index="13"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08194, -0.279997, 0)
 
 [node name="PickupHandler" parent="Lantern" index="14" groups=["Lantern"]]
 
 [node name="CollisionShape3D" parent="Lantern/PickupHandler" index="0" groups=["Lantern"]]
+
+[node name="InspectableGuy" type="Area3D" parent="." node_paths=PackedStringArray("UINode") groups=["Inspectable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56904, 1.23658, -1.8848)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("11_2a1tb")
+UINode = NodePath("../PlayerUI")
+imageToShow = ExtResource("12_fokyj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InspectableGuy"]
+shape = SubResource("CylinderShape3D_porna")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InspectableGuy"]
+mesh = SubResource("CylinderMesh_j4jti")
+surface_material_override/0 = SubResource("StandardMaterial3D_h1wm7")
+
+[node name="EastWall" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0340252, 0, -15.6506)
+
+[node name="WallSegment7" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, -10.7623, 2.21796, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment7"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment7"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment8" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, -7.77149, 2.21796, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment8"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment8"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment9" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, -4.78036, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment9"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment9"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment10" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, -1.78936, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment10"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment10"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment11" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, 1.20164, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment11"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment11"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment12" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, 4.19264, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment12"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment12"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment13" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, 7.16719, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment13"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment13"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment14" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, 10.1582, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment14"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment14"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment15" type="StaticBody3D" parent="EastWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(1, 1.06581e-14, 4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -1.06581e-14, 1, 1.91069e-15, 13.1492, 2.218, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/WallSegment15"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="EastWall/WallSegment15"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="EastWall/WallSegment15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="EastWall/WallSegment15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="RockyWall" type="StaticBody3D" parent="EastWall"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.645508, 2.21796, -0.098834)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EastWall/RockyWall"]
+shape = SubResource("BoxShape3D_vqgcn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EastWall/RockyWall"]
+mesh = SubResource("BoxMesh_mcs7m")
+surface_material_override/0 = ExtResource("8_nqqqx")
+
+[node name="NorthWall" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.251, 0, 0)
+
+[node name="WallSegment" type="StaticBody3D" parent="NorthWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.21796, 0.77396)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/WallSegment"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="NorthWall/WallSegment"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="NorthWall/WallSegment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="NorthWall/WallSegment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment2" type="StaticBody3D" parent="NorthWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.21796, -2.21687)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/WallSegment2"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="NorthWall/WallSegment2"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="NorthWall/WallSegment2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="NorthWall/WallSegment2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment3" type="StaticBody3D" parent="NorthWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -5.208)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/WallSegment3"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="NorthWall/WallSegment3"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="NorthWall/WallSegment3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="NorthWall/WallSegment3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment4" type="StaticBody3D" parent="NorthWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -8.199)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/WallSegment4"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="NorthWall/WallSegment4"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="NorthWall/WallSegment4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="NorthWall/WallSegment4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment5" type="StaticBody3D" parent="NorthWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -11.19)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/WallSegment5"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="NorthWall/WallSegment5"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="NorthWall/WallSegment5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="NorthWall/WallSegment5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment6" type="StaticBody3D" parent="NorthWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -14.181)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/WallSegment6"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="NorthWall/WallSegment6"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="NorthWall/WallSegment6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="NorthWall/WallSegment6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="RockyWall" type="StaticBody3D" parent="NorthWall"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -0.117599, 2.21796, -7.7202)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NorthWall/RockyWall"]
+shape = SubResource("BoxShape3D_ggnk0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NorthWall/RockyWall"]
+mesh = SubResource("BoxMesh_ej28l")
+surface_material_override/0 = ExtResource("8_nqqqx")
+
+[node name="Southwall" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 14.5729, 1.90735e-06, -13.4763)
+
+[node name="WallSegment" type="StaticBody3D" parent="Southwall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.21796, 0.77396)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/WallSegment"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="Southwall/WallSegment"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="Southwall/WallSegment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="Southwall/WallSegment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment2" type="StaticBody3D" parent="Southwall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.21796, -2.21687)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/WallSegment2"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="Southwall/WallSegment2"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="Southwall/WallSegment2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="Southwall/WallSegment2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment3" type="StaticBody3D" parent="Southwall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -5.208)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/WallSegment3"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="Southwall/WallSegment3"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="Southwall/WallSegment3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="Southwall/WallSegment3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment4" type="StaticBody3D" parent="Southwall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -8.199)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/WallSegment4"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="Southwall/WallSegment4"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="Southwall/WallSegment4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="Southwall/WallSegment4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment5" type="StaticBody3D" parent="Southwall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -11.19)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/WallSegment5"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="Southwall/WallSegment5"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="Southwall/WallSegment5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="Southwall/WallSegment5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment6" type="StaticBody3D" parent="Southwall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, 2.218, -14.181)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/WallSegment6"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="Southwall/WallSegment6"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="Southwall/WallSegment6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="Southwall/WallSegment6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="RockyWall" type="StaticBody3D" parent="Southwall"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, -0.117599, 2.21796, -7.7202)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Southwall/RockyWall"]
+shape = SubResource("BoxShape3D_ggnk0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Southwall/RockyWall"]
+mesh = SubResource("BoxMesh_ej28l")
+surface_material_override/0 = ExtResource("8_nqqqx")
+
+[node name="WestWall" type="Node3D" parent="."]
+
+[node name="WallSegment7" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, 13.0771, 2.21796, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment7"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment7"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment8" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, 10.0862, 2.21796, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment8"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment8"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment9" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, 7.0951, 2.218, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment9"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment9"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment10" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, 4.1041, 2.218, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment10"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment10"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment11" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, 1.11311, 2.218, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment11"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment11"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment12" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, -1.8779, 2.218, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment12"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment12"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment14" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, -7.84344, 2.218, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment14"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment14"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="WallSegment15" type="StaticBody3D" parent="WestWall" node_paths=PackedStringArray("grindableToProvide", "positionsToInstantiate", "fullHealthMesh") groups=["Breakable"]]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, -8.74228e-08, -1, -5.73206e-15, -10.8344, 2.218, 2.22664)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_4mut5")
+grindableToProvide = NodePath("../../GrindableToCopy")
+itemStrength = 2
+positionsToInstantiate = [NodePath("Pos0"), NodePath("Pos1")]
+fullHealthMesh = NodePath("FullHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/WallSegment15"]
+shape = SubResource("BoxShape3D_ms3c4")
+
+[node name="FullHealth" type="MeshInstance3D" parent="WestWall/WallSegment15"]
+mesh = SubResource("BoxMesh_y8okp")
+surface_material_override/0 = ExtResource("3_o6got")
+
+[node name="Pos0" type="Marker3D" parent="WestWall/WallSegment15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942156, 0.935608, 1.88792)
+
+[node name="Pos1" type="Marker3D" parent="WestWall/WallSegment15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508179, 0.81129, 1.88792)
+
+[node name="RockyWall1" type="StaticBody3D" parent="WestWall"]
+transform = Transform3D(-1, -8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, 8.74228e-08, -1, 1.91069e-15, 6.629, 2.218, 2.338)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/RockyWall1"]
+shape = SubResource("BoxShape3D_jlpm5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WestWall/RockyWall1"]
+mesh = SubResource("BoxMesh_uwy5u")
+surface_material_override/0 = ExtResource("8_nqqqx")
+
+[node name="RockyWall2" type="StaticBody3D" parent="WestWall"]
+transform = Transform3D(-1, -8.74228e-08, -4.37114e-08, 4.37114e-08, 1.91069e-15, -1, 8.74228e-08, -1, 1.91069e-15, -16.3554, 2.218, 2.338)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WestWall/RockyWall2"]
+shape = SubResource("BoxShape3D_jlpm5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WestWall/RockyWall2"]
+mesh = SubResource("BoxMesh_uwy5u")
+surface_material_override/0 = ExtResource("8_nqqqx")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.666501, 0.206559, 1.2253)
+
+[node name="Floor" parent="Node3D" instance=ExtResource("1_mj6wr")]
+transform = Transform3D(0.598576, 0, 0, 0, 0.598576, 0, 0, 0, 0.598576, 0.919497, -0.0947523, -13.6218)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Check" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0384614, -0.79435)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Check"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.161682, -18.654)
+shape = SubResource("BoxShape3D_7q206")
 
 [editable path="Player"]
 [editable path="Lantern"]

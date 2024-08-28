@@ -2,6 +2,9 @@ extends StaticBody3D
 
 class_name MillHandler
 
+@export_category("Tooltip")
+@export var tooltipText : String = "(E) to grind object into oil"
+
 @export_category("Node Plugins")
 @export var oilDestination : Node3D
 @export var collectibleOilObject : OilHandler

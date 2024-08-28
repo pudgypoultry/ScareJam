@@ -1,9 +1,64 @@
-[gd_scene format=3 uid="uid://ljlsfvw1lf7m"]
+[gd_scene load_steps=5 format=3 uid="uid://ljlsfvw1lf7m"]
 
-[node name="PlayerUI" type="Control"]
+[ext_resource type="FontFile" uid="uid://ph6oa5yyt083" path="res://FontsForProject/SpeechesAndCream-Choked.otf" id="1_bvqr1"]
+[ext_resource type="Script" path="res://Scenes/UI/UIHandler.gd" id="1_c3bpn"]
+[ext_resource type="Material" uid="uid://d1vuo7q2dn86o" path="res://BlurShader.tres" id="1_lyoai"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gqoid"]
+
+[node name="PlayerUI" type="Control" node_paths=PackedStringArray("toolTipLabel", "inspectionDisplay", "blurCurtain")]
+material = ExtResource("1_lyoai")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_c3bpn")
+toolTipLabel = NodePath("Label")
+inspectionDisplay = NodePath("MarginContainer/TestButt")
+blurCurtain = NodePath("BlurBoy")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_bvqr1")
+theme_override_font_sizes/font_size = 32
+text = "Testing with a whole-ass line of text"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.84)
+
+[node name="TestButt" type="TextureRect" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 3
+
+[node name="BlurBoy" type="TextureRect" parent="."]
+visible = false
+z_index = -1
+material = ExtResource("1_lyoai")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_gqoid")
