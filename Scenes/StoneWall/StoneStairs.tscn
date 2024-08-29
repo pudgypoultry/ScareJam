@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://cyu3w1hvtrtup"]
+
+[ext_resource type="PackedScene" uid="uid://com460c2mbocx" path="res://Stairs.glb" id="1_osc1m"]
+[ext_resource type="Texture2D" uid="uid://b5bhw75tr7cjg" path="res://Scenes/StoneWall/RockyWall_albedo.png" id="2_70gi5"]
+[ext_resource type="Texture2D" uid="uid://caln26727iqtb" path="res://Scenes/StoneWall/RockyWall_orm.png" id="3_lypwq"]
+[ext_resource type="Texture2D" uid="uid://dpdik141v6vgj" path="res://Scenes/StoneWall/RockyWall_emission.png" id="4_mjpen"]
+[ext_resource type="Texture2D" uid="uid://droj6u6sdqdio" path="res://Scenes/StoneWall/RockyWall_heightmap.png" id="5_p4c5i"]
+[ext_resource type="Texture2D" uid="uid://ro207ikeirah" path="res://Scenes/StoneWall/RockyWall_normal.png" id="6_m5sym"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1ewf"]
+albedo_texture = ExtResource("2_70gi5")
+metallic_texture = ExtResource("3_lypwq")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("3_lypwq")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("4_mjpen")
+normal_enabled = true
+normal_texture = ExtResource("6_m5sym")
+ao_enabled = true
+ao_texture = ExtResource("3_lypwq")
+heightmap_enabled = true
+heightmap_scale = 2.5
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_texture = ExtResource("5_p4c5i")
+uv1_scale = Vector3(0.5, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6fnqb"]
+albedo_texture = ExtResource("2_70gi5")
+metallic_texture = ExtResource("3_lypwq")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("3_lypwq")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("4_mjpen")
+normal_enabled = true
+normal_texture = ExtResource("6_m5sym")
+ao_enabled = true
+ao_texture = ExtResource("3_lypwq")
+heightmap_enabled = true
+heightmap_scale = 2.5
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_texture = ExtResource("5_p4c5i")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ksn4q"]
+albedo_texture = ExtResource("2_70gi5")
+metallic_texture = ExtResource("3_lypwq")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("3_lypwq")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("4_mjpen")
+normal_enabled = true
+normal_texture = ExtResource("6_m5sym")
+ao_enabled = true
+ao_texture = ExtResource("3_lypwq")
+heightmap_enabled = true
+heightmap_scale = 2.5
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_texture = ExtResource("5_p4c5i")
+
+[node name="Stairs" instance=ExtResource("1_osc1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.75, 0, 0, 0)
+
+[node name="mergedBlocks(Clone)" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_i1ewf")
+surface_material_override/1 = SubResource("StandardMaterial3D_6fnqb")
+surface_material_override/2 = SubResource("StandardMaterial3D_ksn4q")

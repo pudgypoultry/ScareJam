@@ -5,4 +5,4 @@
 [resource]
 shader = ExtResource("1_m3qrl")
 shader_parameter/lod = 5.0
-shader_parameter/mix_percentage = 0.3
+shader_parameter/mix_percentage = 0.766

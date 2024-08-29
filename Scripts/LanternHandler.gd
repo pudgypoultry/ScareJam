@@ -36,7 +36,7 @@ var lightEnergyMax : float:
 
 @export_category("Plugging In Objects")
 @export var lanternLight : Array[OmniLight3D]
-@export var lanternPickup : Area3D
+@export var lanternPickup : StaticBody3D
 @export var holdingRay : RayCast3D
 @export var collisionNode : CollisionShape3D
 
