@@ -1,7 +1,6 @@
 extends Area3D
 
 class_name GrindableHandler
-# pickupAndDrop
 
 @export_category("Tooltip")
 @export var tooltipText : String = ""

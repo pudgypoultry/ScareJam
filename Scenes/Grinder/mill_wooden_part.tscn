@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxthdx76oxi7t"]
+[gd_scene load_steps=4 format=3 uid="uid://bxthdx76oxi7t"]
 
 [ext_resource type="PackedScene" uid="uid://cwoj7omtvxiws" path="res://Scenes/Grinder/MillWoodenPart.glb" id="1_coc83"]
-[ext_resource type="Material" path="res://Scenes/Grinder/WoodenWall2.tres" id="2_1fd6v"]
+[ext_resource type="Texture2D" uid="uid://qpwdqahswr3p" path="res://Scenes/Shelves/old_wooden_bookshelves_0.jpg" id="2_fb0o0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8862n"]
+albedo_texture = ExtResource("2_fb0o0")
+uv1_scale = Vector3(-1.9, 0.215, 5.695)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 1.02018
 
 [node name="MillWoodenPart" instance=ExtResource("1_coc83")]
 
 [node name="WoodenBowl" parent="." index="0"]
-surface_material_override/0 = ExtResource("2_1fd6v")
+surface_material_override/0 = SubResource("StandardMaterial3D_8862n")

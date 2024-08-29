@@ -41,10 +41,12 @@ var lightEnergyMax : float:
 @export var collisionNode : CollisionShape3D
 
 var previousRate : float
+var hasBeenPickedUp : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lightEnergyMax = lanternLight[0].omni_range
+	PauseLight()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -81,6 +83,9 @@ func PickupAndDrop(handPosition : Node3D):
 		print_debug(self.name, " should be enabled now")
 	
 	else:
+		if !hasBeenPickedUp:
+			hasBeenPickedUp = true
+			ResumeLight()
 		reparent(handPosition, false)
 		position = Vector3.ZERO
 		rotation = rotationOffset
@@ -89,9 +94,11 @@ func PickupAndDrop(handPosition : Node3D):
 		collisionNode.set_disabled(true)
 		print_debug(self.name, " should be disabled now")
 
+
 func PauseLight():
 	previousRate = lightDropOffRate
 	lightDropOffRate = 0
+
 
 func ResumeLight():
 	lightDropOffRate = previousRate

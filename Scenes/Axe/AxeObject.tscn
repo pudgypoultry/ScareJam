@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://lwxhnqog48ro"]
+[gd_scene load_steps=6 format=3 uid="uid://lwxhnqog48ro"]
 
 [ext_resource type="PackedScene" uid="uid://dwnd36v018igd" path="res://Scenes/Axe/AxeModel.glb" id="1_lu3y2"]
 [ext_resource type="Script" path="res://Scripts/AxeHandler.gd" id="1_vprxn"]
 [ext_resource type="PackedScene" uid="uid://bf0111vvaeqox" path="res://Scenes/Axe/AxeHandleModel.glb" id="2_mggtr"]
 [ext_resource type="Material" uid="uid://bt6cols0eor3" path="res://Scenes/Axe/RustedAxe.tres" id="3_3yybl"]
+[ext_resource type="AudioStream" uid="uid://c5thshg3xohne" path="res://Sounds/89593-Axe_impact_chop_firewood_hit_wood-BLASTWAVEFX-26203.wav" id="5_2l7vv"]
 
-[node name="AxeObject" type="Node3D"]
+[node name="AxeObject" type="Node3D" node_paths=PackedStringArray("chopSound")]
 script = ExtResource("1_vprxn")
+chopSound = NodePath("ChoppingNoise")
 
 [node name="AxeModel" parent="." instance=ExtResource("1_lu3y2")]
 
@@ -15,5 +17,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.53001, -0.918365)
 
 [node name="Cube" parent="AxeHandleModel" index="0"]
 surface_material_override/0 = ExtResource("3_3yybl")
+
+[node name="ChoppingNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_2l7vv")
+volume_db = -21.225
 
 [editable path="AxeHandleModel"]

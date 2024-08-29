@@ -5,6 +5,7 @@ class_name AxeHandler
 @export_category("Plugging in Nodes")
 @export var holdPosition : Node3D
 @export var putAwayPosition : Node3D
+@export var chopSound : AudioStreamPlayer3D
 
 var currentTween : Tween
 
@@ -34,6 +35,7 @@ func Chop():
 	TweenPosition(position+Vector3(-1,-1,-0.3), 0.2)
 	TweenRotation(rotation+Vector3(-PI/2 - 1, 0.4, 0), 0.2)
 	await get_tree().create_timer(0.2, true).timeout
+	chopSound.play()
 	TweenRotation(rotation+Vector3(1, -0.4, 0), 0.3)
 	await get_tree().create_timer(0.3, true).timeout
 
