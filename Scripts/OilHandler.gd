@@ -23,7 +23,10 @@ func PrepareMe(amountOfOil : float, amountOfTime : float, creator : MillHandler)
 
 func AddToMe(amountOfOil, amountOfTime, creator):
 	oilAdditionAmount += amountOfOil
-	scale *= amountOfOil * 1.05
+	print("Current oil: ", oilAdditionAmount)
+	if oilAdditionAmount < 6:
+		scale *= amountOfOil * 1.1
+		position.y += amountOfOil * 0.05
 
 # Add time/function for animation of filling the basin
 func FillUpBasin(timeToFill : float):

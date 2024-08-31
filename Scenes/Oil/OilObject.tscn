@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://nbgvqs5qk2ul"]
+
+[ext_resource type="Script" path="res://Scripts/OilHandler.gd" id="1_hbwdd"]
+[ext_resource type="Material" uid="uid://gk2ojeybb3s7" path="res://Scenes/Oil/Oil.tres" id="2_24y8n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5u3bp"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n4hlm"]
+height = 0.001
+
+[node name="OilCollection" type="StaticBody3D" groups=["LanternFuel"]]
+transform = Transform3D(0.599889, 0, 0, 0, 0.599889, 0, 0, 0, 0.599889, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_hbwdd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5u3bp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_n4hlm")
+surface_material_override/0 = ExtResource("2_24y8n")

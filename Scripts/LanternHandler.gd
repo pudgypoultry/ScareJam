@@ -96,9 +96,12 @@ func PickupAndDrop(handPosition : Node3D):
 
 
 func PauseLight():
+	print("Pausing...")
 	previousRate = lightDropOffRate
 	lightDropOffRate = 0
 
 
 func ResumeLight():
+	print("Unpausing...")
 	lightDropOffRate = previousRate
+	print(lightDropOffRate)

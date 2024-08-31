@@ -26,7 +26,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_3m18y"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_nli3p"]
 resource_name = "Spigot_Cube"
 _surfaces = [{
 "aabb": AABB(-2.46286, -12.1625, -2.13288, 4.92573, 15.4959, 2.76342),
@@ -51,8 +51,8 @@ shadow_mesh = SubResource("ArrayMesh_t8bki")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0124512, 0.385254)
 shape = SubResource("BoxShape3D_cqi26")
 
-[node name="Cube" type="MeshInstance3D" parent="."]
+[node name="Cube2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.125013, 0, 0, 0, 0.125013, 0, 0, 0, 0.750078, 0, 0.491607, 0.967812)
-mesh = SubResource("ArrayMesh_3m18y")
+mesh = SubResource("ArrayMesh_nli3p")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("1_rp2r5")

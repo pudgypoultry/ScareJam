@@ -1,17 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://be0huppc2l3kd"]
+[gd_scene load_steps=10 format=3 uid="uid://be0huppc2l3kd"]
 
 [ext_resource type="PackedScene" uid="uid://bxthdx76oxi7t" path="res://Scenes/Grinder/mill_wooden_part.tscn" id="1_m7qss"]
 [ext_resource type="PackedScene" uid="uid://o50jyo5e1d60" path="res://Scenes/Grinder/mill_stone.tscn" id="2_rn65w"]
 [ext_resource type="Script" path="res://Scripts/Gears.gd" id="3_v4buw"]
 [ext_resource type="Material" uid="uid://cixlwj5nq30bm" path="res://Scenes/Grinder/MarbleFromPoops.tres" id="4_43qpa"]
+[ext_resource type="Texture2D" uid="uid://qpwdqahswr3p" path="res://Scenes/Shelves/old_wooden_bookshelves_0.jpg" id="5_luck5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ap2rm"]
 size = Vector3(1.24017, 1.32294, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_20qio"]
-top_radius = 3.8
-bottom_radius = 3.8
-height = 0.05
+top_radius = 3.9
+bottom_radius = 3.9
+height = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_noe5r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tg80w"]
+albedo_texture = ExtResource("5_luck5")
+uv1_scale = Vector3(2.58, 0.135, 1)
 
 [node name="TheGrindstone" type="Node3D"]
 
@@ -55,11 +62,18 @@ transform = Transform3D(1, 0, 0, 0, 0.79936, 0.600853, 0, -0.600853, 0.79936, 0,
 shape = SubResource("BoxShape3D_ap2rm")
 
 [node name="StoneTop" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, -0.270079, 0)
+transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 0, -0.270079, 0)
 script = ExtResource("3_v4buw")
 rotationAmount = -1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StoneTop"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.136178, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0111218, 1.8883e-08)
 mesh = SubResource("CylinderMesh_20qio")
 surface_material_override/0 = ExtResource("4_43qpa")
+
+[node name="CoverMySins" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.49003, 0, 0, 0, 0.0281563, 0, 0, 0, 0.259443, 0, -1.24507, -4.0158)
+mesh = SubResource("BoxMesh_noe5r")
+surface_material_override/0 = SubResource("StandardMaterial3D_tg80w")
+
+[editable path="MillStone"]

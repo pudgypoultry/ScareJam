@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://bg0a5ds7vb6pj"]
+[gd_scene load_steps=10 format=4 uid="uid://bg0a5ds7vb6pj"]
 
 [ext_resource type="Texture2D" uid="uid://0hjdak4nokfj" path="res://Scenes/Gear/Gear1_TreeRing.jpg" id="1_u8m32"]
 [ext_resource type="Texture2D" uid="uid://dlnq88p58bvd5" path="res://Scenes/Gear/Gear1_TreeRing.png" id="2_c7oqn"]
@@ -45,9 +45,20 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h5xuq")
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_s51d4"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.275
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78757"]
+albedo_color = Color(0.460938, 0.369483, 0.271958, 1)
+albedo_texture = ExtResource("2_c7oqn")
+uv1_scale = Vector3(2.4, 2.055, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_k1k38"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evheg"]
+albedo_color = Color(0.462745, 0.368627, 0.270588, 1)
 albedo_texture = ExtResource("2_c7oqn")
 uv1_offset = Vector3(-0.42, 0, 0)
 
@@ -55,112 +66,231 @@ uv1_offset = Vector3(-0.42, 0, 0)
 
 [node name="Cylinder" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.136006, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 mesh = SubResource("ArrayMesh_spne4")
 skeleton = NodePath("")
 
-[node name="Tooth" type="Node3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.02548, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_s51d4")
+surface_material_override/0 = SubResource("StandardMaterial3D_78757")
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth"]
+[node name="Teeth" type="Node3D" parent="."]
+transform = Transform3D(0.801379, 0, 0, 0, 1, 0, 0, 0, 0.801379, 0, 0, 0)
+
+[node name="Tooth" type="Node3D" parent="Teeth"]
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth2" type="Node3D" parent="."]
+[node name="Tooth2" type="Node3D" parent="Teeth"]
 transform = Transform3D(0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, 0.809017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth2"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth2"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth3" type="Node3D" parent="."]
+[node name="Tooth3" type="Node3D" parent="Teeth"]
 transform = Transform3D(0.309017, 0, -0.951057, 0, 1, 0, 0.951057, 0, 0.309017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth3"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth3"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth4" type="Node3D" parent="."]
+[node name="Tooth4" type="Node3D" parent="Teeth"]
 transform = Transform3D(-0.309017, 0, -0.951056, 0, 1, 0, 0.951056, 0, -0.309017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth4"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth4"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth5" type="Node3D" parent="."]
+[node name="Tooth5" type="Node3D" parent="Teeth"]
 transform = Transform3D(-0.309017, 0, -0.951056, 0, 1, 0, 0.951056, 0, -0.309017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth5"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth5"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth6" type="Node3D" parent="."]
+[node name="Tooth6" type="Node3D" parent="Teeth"]
 transform = Transform3D(-0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, -0.809017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth6"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth6"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth7" type="Node3D" parent="."]
+[node name="Tooth7" type="Node3D" parent="Teeth"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth7"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth7"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth8" type="Node3D" parent="."]
+[node name="Tooth8" type="Node3D" parent="Teeth"]
 transform = Transform3D(-0.809017, 0, 0.587785, 0, 1, 0, -0.587785, 0, -0.809017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth8"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth8"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth9" type="Node3D" parent="."]
+[node name="Tooth9" type="Node3D" parent="Teeth"]
 transform = Transform3D(-0.309017, 0, 0.951057, 0, 1, 0, -0.951057, 0, -0.309017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth9"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth9"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth10" type="Node3D" parent="."]
+[node name="Tooth10" type="Node3D" parent="Teeth"]
 transform = Transform3D(0.309017, 0, 0.951056, 0, 1, 0, -0.951056, 0, 0.309017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth10"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth10"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth11" type="Node3D" parent="."]
+[node name="Tooth11" type="Node3D" parent="Teeth"]
 transform = Transform3D(0.309017, 0, 0.951056, 0, 1, 0, -0.951056, 0, 0.309017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth11"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth11"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
 
-[node name="Tooth12" type="Node3D" parent="."]
+[node name="Tooth12" type="Node3D" parent="Teeth"]
 transform = Transform3D(0.809017, 0, 0.587785, 0, 1, 0, -0.587785, 0, 0.809017, 0, 0, 0)
 
-[node name="GearTooth" type="MeshInstance3D" parent="Tooth12"]
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth/Tooth12"]
 transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
 mesh = SubResource("BoxMesh_k1k38")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Teeth2" type="Node3D" parent="."]
+transform = Transform3D(0.763191, 0, -0.244432, 0, 1, 0, 0.244432, 0, 0.763191, 0, 0, 0)
+
+[node name="Tooth" type="Node3D" parent="Teeth2"]
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth2" type="Node3D" parent="Teeth2"]
+transform = Transform3D(0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, 0.809017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth2"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth3" type="Node3D" parent="Teeth2"]
+transform = Transform3D(0.309017, 0, -0.951057, 0, 1, 0, 0.951057, 0, 0.309017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth3"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth4" type="Node3D" parent="Teeth2"]
+transform = Transform3D(-0.309017, 0, -0.951056, 0, 1, 0, 0.951056, 0, -0.309017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth4"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth5" type="Node3D" parent="Teeth2"]
+transform = Transform3D(-0.309017, 0, -0.951056, 0, 1, 0, 0.951056, 0, -0.309017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth5"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth6" type="Node3D" parent="Teeth2"]
+transform = Transform3D(-0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, -0.809017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth6"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth7" type="Node3D" parent="Teeth2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth7"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth8" type="Node3D" parent="Teeth2"]
+transform = Transform3D(-0.809017, 0, 0.587785, 0, 1, 0, -0.587785, 0, -0.809017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth8"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth9" type="Node3D" parent="Teeth2"]
+transform = Transform3D(-0.309017, 0, 0.951057, 0, 1, 0, -0.951057, 0, -0.309017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth9"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth10" type="Node3D" parent="Teeth2"]
+transform = Transform3D(0.309017, 0, 0.951056, 0, 1, 0, -0.951056, 0, 0.309017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth10"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth11" type="Node3D" parent="Teeth2"]
+transform = Transform3D(0.309017, 0, 0.951056, 0, 1, 0, -0.951056, 0, 0.309017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth11"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evheg")
+
+[node name="Tooth12" type="Node3D" parent="Teeth2"]
+transform = Transform3D(0.809017, 0, 0.587785, 0, 1, 0, -0.587785, 0, 0.809017, 0, 0, 0)
+
+[node name="GearTooth" type="MeshInstance3D" parent="Teeth2/Tooth12"]
+transform = Transform3D(0.36656, 0, 0, 0, 0.280872, 0, 0, 0, 0.323804, 1.16644, 0, 0)
+mesh = SubResource("BoxMesh_k1k38")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_evheg")

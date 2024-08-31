@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c4bb2kwxfxjt4" path="res://Scenes/Grinder/MarbleFromPoops_sss.png" id="6"]
 
 [resource]
-albedo_color = Color(0.545258, 0.545258, 0.545258, 1)
+albedo_color = Color(0.337255, 0.337255, 0.337255, 1)
 albedo_texture = ExtResource("1")
 roughness_texture = ExtResource("2")
 roughness_texture_channel = 1
@@ -15,3 +15,4 @@ normal_texture = ExtResource("3")
 subsurf_scatter_enabled = true
 subsurf_scatter_strength = 0.25
 subsurf_scatter_texture = ExtResource("6")
+uv1_scale = Vector3(1.02, 1, 1)

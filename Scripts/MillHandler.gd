@@ -9,7 +9,7 @@ class_name MillHandler
 @export var oilDestination : Node3D
 @export var collectibleOilObject : OilHandler
 
-var oilTest = preload("res://Scenes/OilObject.tscn")
+@export var oilTest = preload("res://Scenes/Oil/OilObject.tscn")
 var amountOfOilToDispense : float
 var amountOfTimeToFillBasin : float
 var currentlySpawned : bool = false:
